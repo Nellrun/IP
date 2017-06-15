@@ -1,5 +1,5 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.1
 import QtQuick.Dialogs 1.2
@@ -77,6 +77,7 @@ ApplicationWindow {
 
     ColumnLayout {
         id: startScreen
+        visible: false
 
         anchors.centerIn: parent
 
@@ -100,7 +101,23 @@ ApplicationWindow {
         }
     }
 
-    FileDialog {
-        id: openProjectDialog
+
+    LeftMenu {
+        width: 70
+        height: 480
     }
+
+
+//    ColumnLayout {
+//        anchors.fill: parent
+
+//        TextEditorArea {
+//            Layout.fillHeight: true
+//            Layout.fillWidth: true
+//        }
+//    }
+
+//    FileDialog {
+//        id: openProjectDialog
+//    }
 }

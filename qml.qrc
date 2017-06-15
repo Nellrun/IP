@@ -1,6 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>settings.qml</file>
+        <file>RecentlyFileList.qml</file>
+        <file>TextEditorArea.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>LeftMenu.qml</file>
+        <file>icons/text_24dp_2x.png</file>
+        <file>icons/text_24dp.png</file>
     </qresource>
 </RCC>

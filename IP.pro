@@ -2,7 +2,31 @@ QT += qml quick
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    constant.cpp \
+    funcconstant.cpp \
+    ip.cpp \
+    lambda.cpp \
+    lexer.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    parser.cpp \
+    predicate.cpp \
+    signalhandler.cpp \
+    symbol.cpp \
+    variable.cpp \
+    constant.cpp \
+    funcconstant.cpp \
+    ip.cpp \
+    lambda.cpp \
+    lexer.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    parser.cpp \
+    predicate.cpp \
+    signalhandler.cpp \
+    symbol.cpp \
+    variable.cpp
 
 RESOURCES += qml.qrc
 
@@ -27,3 +51,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    constant.h \
+    funcconstant.h \
+    ip.h \
+    lambda.h \
+    lexer.h \
+    mainwindow.h \
+    parser.h \
+    predicate.h \
+    signalhandler.h \
+    symbol.h \
+    variable.h \
+    constant.h \
+    funcconstant.h \
+    ip.h \
+    lambda.h \
+    lexer.h \
+    mainwindow.h \
+    parser.h \
+    predicate.h \
+    signalhandler.h \
+    symbol.h \
+    variable.h
