@@ -25,9 +25,27 @@ ApplicationWindow {
                         text: "Создать..."
                         onTriggered: createButton.toggle()
                     }
+
                     MenuItem {
                         text: "Открыть..."
                         onTriggered: openButton.toggle()
+                    }
+
+
+                    MenuSeparator {
+
+                    }
+
+                    MenuItem {
+                        text: "Сохранить"
+                    }
+
+                    MenuItem {
+                        text: "Сохранить как..."
+                    }
+
+                    MenuSeparator {
+
                     }
 
                     MenuItem {

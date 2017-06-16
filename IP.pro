@@ -2,7 +2,17 @@ QT += qml quick
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    constant.cpp \
+    funcconstant.cpp \
+    ip.cpp \
+    lambda.cpp \
+    lexer.cpp \
+    parser.cpp \
+    predicate.cpp \
+    signalhandler.cpp \
+    symbol.cpp \
+    variable.cpp
 
 RESOURCES += qml.qrc
 
@@ -28,4 +38,14 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-HEADERS += signalhandler.h
+HEADERS += \
+    constant.h \
+    funcconstant.h \
+    ip.h \
+    lambda.h \
+    lexer.h \
+    parser.h \
+    predicate.h \
+    signalhandler.h \
+    symbol.h \
+    variable.h
