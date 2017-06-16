@@ -2,10 +2,18 @@
 #define VARIABLE_H
 
 
-class Variable
+#include <string>
+#include "Symbol.h"
+
+
+class Variable:Symbol
 {
 public:
-    Variable();
+    Variable(std::string name);
+    Symbol* copy();
+    ~Variable();
+
+private:
 };
 
 #endif // VARIABLE_H

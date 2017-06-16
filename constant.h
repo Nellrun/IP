@@ -2,10 +2,20 @@
 #define CONSTANT_H
 
 
-class Constant
+class Constant:Symbol
 {
 public:
-    Constant();
+    Constant(std::string name);
+    Constant(std::string name, std::string value);
+
+    std::string getValue();
+    void setValue(std::string);
+    Symbol* copy();
+
+    ~Constant();
+
+private:
+    std::string value;
 };
 
 #endif // CONSTANT_H

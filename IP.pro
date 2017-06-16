@@ -8,20 +8,6 @@ SOURCES += main.cpp \
     ip.cpp \
     lambda.cpp \
     lexer.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    parser.cpp \
-    predicate.cpp \
-    signalhandler.cpp \
-    symbol.cpp \
-    variable.cpp \
-    constant.cpp \
-    funcconstant.cpp \
-    ip.cpp \
-    lambda.cpp \
-    lexer.cpp \
-    main.cpp \
-    mainwindow.cpp \
     parser.cpp \
     predicate.cpp \
     signalhandler.cpp \
@@ -58,18 +44,6 @@ HEADERS += \
     ip.h \
     lambda.h \
     lexer.h \
-    mainwindow.h \
-    parser.h \
-    predicate.h \
-    signalhandler.h \
-    symbol.h \
-    variable.h \
-    constant.h \
-    funcconstant.h \
-    ip.h \
-    lambda.h \
-    lexer.h \
-    mainwindow.h \
     parser.h \
     predicate.h \
     signalhandler.h \
