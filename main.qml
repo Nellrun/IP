@@ -15,12 +15,14 @@ ApplicationWindow {
         RowLayout {
 
             ToolButton {
+                id: fileButton
                 text: "Файл"
 
                 onClicked: fileMenu.open()
 
                 Menu {
                     id: fileMenu
+                    y: fileButton.height
 
                     MenuItem {
                         text: "Создать..."
@@ -57,11 +59,13 @@ ApplicationWindow {
             }
 
             ToolButton {
+                id: editButton
                 text: "Редактировать"
                 onClicked: editMenu.open()
 
                 Menu {
                     id: editMenu
+                    y: editButton.height
 
                     MenuItem {
                         text: "Шрифт..."
@@ -70,17 +74,19 @@ ApplicationWindow {
             }
 
             ToolButton {
-                id: settingsMenu
+                id: settingsButton
                 text: "Настройки"
             }
 
             ToolButton {
+                id: helpButton
                 text: "Помощь"
 
                 onClicked: helpMenu.open()
 
                 Menu {
                     id: helpMenu
+                    y: helpButton.height
 
                     MenuItem {
                         text: "Помощь..."
@@ -109,6 +115,10 @@ ApplicationWindow {
 
             text: qsTr("Создать проект...")
             anchors.horizontalCenter: parent.horizontalCenter
+            onClicked: {
+                startScreen.visible = false
+                editorScreen.visible = true
+            }
         }
 
         Button {
@@ -127,11 +137,17 @@ ApplicationWindow {
 //    }
 
 
-    ColumnLayout {
+    RowLayout {
         id: editorScreen
         visible: false
 
         anchors.fill: parent
+
+        LeftMenu {
+            width: 80
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+        }
 
         TextEditorArea {
             id: textEditor
@@ -144,7 +160,6 @@ ApplicationWindow {
         id: fileReader
         onError: {
             console.log(msg);
-            console.log(source);
         }
     }
 
@@ -155,8 +170,6 @@ ApplicationWindow {
             startScreen.visible = false
             editorScreen.visible = true
             fileReader.setSource(fileUrl)
-//            fileReader.setSource(Qt.)
-//            fileReader.setSource("/home/nellrun/!/c++/build-IP-Desktop_Qt_5_9_0_GCC_64bit-Debug/Makefile")
             textEditor.textEditorText = fileReader.read()
         }
     }

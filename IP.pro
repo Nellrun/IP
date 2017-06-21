@@ -13,6 +13,7 @@ SOURCES += main.cpp \
     signalhandler.cpp \
     symbol.cpp \
     variable.cpp \
+    filereader.cpp \
     filereader.cpp
 
 RESOURCES += qml.qrc
@@ -50,4 +51,5 @@ HEADERS += \
     signalhandler.h \
     symbol.h \
     variable.h \
+    filereader.h \
     filereader.h

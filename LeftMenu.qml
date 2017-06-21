@@ -6,37 +6,55 @@ import QtQuick.Controls.Material 2.2
 
 Item {
     Rectangle {
-//        anchors.fill: parent
         width: parent.width
         height: parent.height
 
         color: Material.color(Material.Indigo)
 
         ColumnLayout {
-            spacing: 30
-
+//            spacing: 20
             width: parent.width
 
-            ColumnLayout {
+//            ColumnLayout {
+//                width: parent.width
+////                anchors.centerIn: parent
 
-                width: parent.width
+//                spacing: 15
 
-                spacing: 10
-
-                Image {
-                    height: 32
-                    width: 32
-                    anchors.centerIn: parent
-
-                    source: "icons/text_24dp.png"
-                }
-
-                Text {
-                    text: "База знаний"
+//                Image {
+//                    source: "icons/text_24dp_w.png"
 //                    anchors.centerIn: parent
-                }
+//                }
 
+//                Text {
+//                    color: "white"
+//                    text: "База знаний"
+//                }
+//            }
+
+            MenuElement {
+                width: parent.width
+                imageSource: "icons/text_24dp_w.png"
+                labelText: "База знаний"
             }
+
+            MenuElement {
+                width: parent.width
+                imageSource: "icons/text_24dp_w.png"
+                labelText: "Вывод"
+            }
+
+            MenuElement {
+                width: parent.width
+                imageSource: "icons/text_24dp_w.png"
+                labelText: "Результат"
+            }
+
+//            MenuElement {
+////                height: 100
+//                imageSource: "icons/text_24dp_w.png"
+//                labelText: "Вывод"
+//            }
         }
     }
 }

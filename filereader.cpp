@@ -15,8 +15,7 @@ QString FileReader::read() {
         return QString();
     }
 
-    QFile f(fSource.path());
-
+    QFile f(fSource.toLocalFile());
     if (f.open(QIODevice::ReadOnly)) {
         QTextStream ts(&f);
         QString out = ts.readAll();
