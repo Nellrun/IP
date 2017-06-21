@@ -3,6 +3,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.1
 import QtQuick.Dialogs 1.2
+import FileReader 1.0
 
 ApplicationWindow {
     visible: true
@@ -95,7 +96,7 @@ ApplicationWindow {
 
     ColumnLayout {
         id: startScreen
-        visible: false
+        visible: true
 
         anchors.centerIn: parent
 
@@ -120,22 +121,43 @@ ApplicationWindow {
     }
 
 
-    LeftMenu {
-        width: 70
-        height: 480
+//    LeftMenu {
+//        width: 70
+//        height: 480
+//    }
+
+
+    ColumnLayout {
+        id: editorScreen
+        visible: false
+
+        anchors.fill: parent
+
+        TextEditorArea {
+            id: textEditor
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
     }
 
+    FileReader {
+        id: fileReader
+        onError: {
+            console.log(msg);
+            console.log(source);
+        }
+    }
 
-//    ColumnLayout {
-//        anchors.fill: parent
+    FileDialog {
+        id: openProjectDialog
 
-//        TextEditorArea {
-//            Layout.fillHeight: true
-//            Layout.fillWidth: true
-//        }
-//    }
-
-//    FileDialog {
-//        id: openProjectDialog
-//    }
+        onAccepted: {
+            startScreen.visible = false
+            editorScreen.visible = true
+            fileReader.setSource(fileUrl)
+//            fileReader.setSource(Qt.)
+//            fileReader.setSource("/home/nellrun/!/c++/build-IP-Desktop_Qt_5_9_0_GCC_64bit-Debug/Makefile")
+            textEditor.textEditorText = fileReader.read()
+        }
+    }
 }

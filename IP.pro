@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     predicate.cpp \
     signalhandler.cpp \
     symbol.cpp \
-    variable.cpp
+    variable.cpp \
+    filereader.cpp
 
 RESOURCES += qml.qrc
 
@@ -48,4 +49,5 @@ HEADERS += \
     predicate.h \
     signalhandler.h \
     symbol.h \
-    variable.h
+    variable.h \
+    filereader.h

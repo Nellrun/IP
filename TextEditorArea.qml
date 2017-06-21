@@ -4,6 +4,9 @@ import QtQuick.Layouts 1.0
 
 
 Item {
+
+    property string textEditorText: ""
+
     RowLayout {
         spacing: 10
 
@@ -35,6 +38,8 @@ Item {
 
         TextArea {
             id: textEditor
+
+            text: textEditorText
 
             Layout.fillWidth: true
             Layout.fillHeight: true
