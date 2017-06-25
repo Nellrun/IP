@@ -5,6 +5,8 @@ import QtQuick.Controls.Material 2.2
 
 
 Item {
+    property int index: 0
+
     Rectangle {
         width: parent.width
         height: parent.height
@@ -18,18 +20,27 @@ Item {
                 width: parent.width
                 imageSource: "icons/ic_view_headline_white_24dp_2x.png"
                 labelText: ""
+                onClicked: {
+                    index = 0
+                }
             }
 
             MenuElement {
                 width: parent.width
                 imageSource: "icons/ic_create_white_24dp_2x.png"
                 labelText: ""
+                onClicked: {
+                    index = 1
+                }
             }
 
             MenuElement {
                 width: parent.width
                 imageSource: "icons/ic_format_indent_increase_white_24dp_2x.png"
                 labelText: ""
+                onClicked: {
+                    index = 2
+                }
             }
 
         }

@@ -6,7 +6,10 @@ Item {
     property string imageSource: ""
     property string labelText: ""
 
-    height: 80
+    signal clicked
+
+    id: root
+    height: 64
 
     Rectangle {
         id: glowBlock
@@ -46,6 +49,8 @@ Item {
             onExited: {
                 onExitGlow.start()
             }
+
+            onClicked: root.clicked()
         }
     }
 

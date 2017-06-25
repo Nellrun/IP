@@ -1,6 +1,8 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.1
+import QtQuick.Controls 2.0
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.3
 import QtQuick.Controls.Material 2.1
 import QtQuick.Dialogs 1.2
 import FileReader 1.0
@@ -159,16 +161,63 @@ ApplicationWindow {
         anchors.fill: parent
 
         LeftMenu {
-            width: 80
+            width: 64
             anchors.top: parent.top
             anchors.bottom: parent.bottom
+
+            onIndexChanged: {
+                sLayout.currentIndex = index
+            }
         }
 
-        TextEditorArea {
-            id: textEditor
+        StackLayout {
+            id: sLayout
+
             Layout.fillHeight: true
             Layout.fillWidth: true
+
+            currentIndex: 0
+
+            TextEditorArea {
+                id: textEditor
+            }
+
+            TextEditorArea {
+
+            }
+
+            TextEditorArea {
+
+            }
         }
+
+//        TabView {
+//            id: tabView
+//            style: TabViewStyle {
+//                tab: Item {}
+//            }
+
+//            Layout.fillHeight: true
+//            Layout.fillWidth: true
+
+
+//            Tab {
+//                TextEditorArea {
+//                    id: textEditor
+//                }
+//            }
+
+//            Tab {
+//                TextEditorArea {
+//                }
+//            }
+
+//            Tab {
+//                TextEditorArea {
+//                }
+//            }
+
+//        }
     }
 
     FileReader {
