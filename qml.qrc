@@ -6,11 +6,15 @@
         <file>TextEditorArea.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>LeftMenu.qml</file>
-        <file>icons/text_24dp_2x.png</file>
-        <file>icons/text_24dp.png</file>
-        <file>icons/text_24dp_w.png</file>
         <file>MenuElement.qml</file>
         <file>settings.qml</file>
         <file>icons/ic_create_white_24dp_1x.png</file>
+        <file>icons/ic_create_white_24dp_2x.png</file>
+        <file>icons/ic_play_arrow_white_24dp_1x.png</file>
+        <file>icons/ic_play_arrow_white_24dp_2x.png</file>
+        <file>icons/ic_view_headline_white_24dp_1x.png</file>
+        <file>icons/ic_view_headline_white_24dp_2x.png</file>
+        <file>icons/ic_format_indent_increase_white_24dp_1x.png</file>
+        <file>icons/ic_format_indent_increase_white_24dp_2x.png</file>
     </qresource>
 </RCC>

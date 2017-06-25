@@ -16,27 +16,28 @@ Item {
 
             MenuElement {
                 width: parent.width
-                imageSource: "icons/text_24dp_w.png"
-                labelText: "База знаний"
+                imageSource: "icons/ic_view_headline_white_24dp_2x.png"
+                labelText: ""
             }
 
             MenuElement {
                 width: parent.width
-                imageSource: "icons/ic_create_white_24dp_1x.png"
-                labelText: "Вывод"
+                imageSource: "icons/ic_create_white_24dp_2x.png"
+                labelText: ""
             }
 
             MenuElement {
                 width: parent.width
-                imageSource: "icons/text_24dp_w.png"
-                labelText: "Результат"
+                imageSource: "icons/ic_format_indent_increase_white_24dp_2x.png"
+                labelText: ""
             }
 
-//            MenuElement {
-////                height: 100
-//                imageSource: "icons/text_24dp_w.png"
-//                labelText: "Вывод"
-//            }
+        }
+
+        MenuElement {
+            width: parent.width
+            imageSource: "icons/ic_play_arrow_white_24dp_2x.png"
+            anchors.bottom: parent.bottom
         }
     }
 }

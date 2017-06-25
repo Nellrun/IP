@@ -51,5 +51,4 @@ HEADERS += \
     signalhandler.h \
     symbol.h \
     variable.h \
-    filereader.h \
     filereader.h
