@@ -12,25 +12,7 @@ Item {
         color: Material.color(Material.Indigo)
 
         ColumnLayout {
-//            spacing: 20
             width: parent.width
-
-//            ColumnLayout {
-//                width: parent.width
-////                anchors.centerIn: parent
-
-//                spacing: 15
-
-//                Image {
-//                    source: "icons/text_24dp_w.png"
-//                    anchors.centerIn: parent
-//                }
-
-//                Text {
-//                    color: "white"
-//                    text: "База знаний"
-//                }
-//            }
 
             MenuElement {
                 width: parent.width
@@ -40,7 +22,7 @@ Item {
 
             MenuElement {
                 width: parent.width
-                imageSource: "icons/text_24dp_w.png"
+                imageSource: "icons/ic_create_white_24dp_1x.png"
                 labelText: "Вывод"
             }
 

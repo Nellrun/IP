@@ -26,12 +26,17 @@ ApplicationWindow {
 
                     MenuItem {
                         text: "Создать..."
-                        onTriggered: createButton.toggle()
+                        onTriggered: {
+                            startScreen.visible = false
+                            editorScreen.visible = true
+                        }
                     }
 
                     MenuItem {
                         text: "Открыть..."
-                        onTriggered: openButton.toggle()
+                        onTriggered: {
+                            openProjectDialog.open()
+                        }
                     }
 
 
@@ -76,6 +81,10 @@ ApplicationWindow {
             ToolButton {
                 id: settingsButton
                 text: "Настройки"
+
+                onClicked: {
+                    settingWindow.visible = true
+                }
             }
 
             ToolButton {
@@ -98,6 +107,12 @@ ApplicationWindow {
                 }
             }
         }
+    }
+
+
+    SettingsWindow {
+        id: settingWindow
+        visible: false
     }
 
     ColumnLayout {
