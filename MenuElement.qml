@@ -2,20 +2,27 @@ import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.0
 
-Item {
-    property string imageSource: ""
-    property string labelText: ""
 
-    signal clicked
-
-    id: root
-    height: 64
-
-    Rectangle {
-        id: glowBlock
+Rectangle {
+        id: root
         width: parent.width
-        height: parent.height
+        height: 64
         color: "#00FFFFFF"
+
+        property string imageSource: ""
+        property string labelText: ""
+        property bool selected: false
+
+        signal clicked
+
+        onSelectedChanged: {
+            if (selected) {
+                onSelectedGlow.start()
+            }
+            else {
+                root.color = "#00FFFFFF"
+            }
+        }
 
         ColumnLayout {
             anchors.fill: parent
@@ -43,33 +50,46 @@ Item {
             hoverEnabled: true
 
             onEntered: {
-                onEnterGlow.start()
+                if (!selected)
+                    onEnterGlow.start()
             }
 
             onExited: {
-                onExitGlow.start()
+                if (!selected)
+                    onExitGlow.start()
             }
 
-            onClicked: root.clicked()
+            onClicked: {
+
+//                root.color = "#5F000000"
+
+                root.clicked()
+            }
+        }
+
+        PropertyAnimation {
+            id: onEnterGlow
+            target: root
+            properties: "color"
+            from: "#00FFFFFF"
+            to: "#2FFFFFFF"
+            duration: 250
+        }
+
+        PropertyAnimation {
+            id: onExitGlow
+            target: root
+            properties: "color"
+            from: "#2FFFFFFF"
+            to: "#00FFFFFF"
+            duration: 250
+        }
+
+        PropertyAnimation {
+            id: onSelectedGlow
+            target: root
+            properties: "color"
+            to: "#5F000000"
+            duration: 250
         }
     }
-
-    PropertyAnimation {
-        id: onEnterGlow
-        target: glowBlock
-        properties: "color"
-        from: "#00FFFFFF"
-        to: "#2FFFFFFF"
-        duration: 250
-    }
-
-    PropertyAnimation {
-        id: onExitGlow
-        target: glowBlock
-        properties: "color"
-        from: "#2FFFFFFF"
-        to: "#00FFFFFF"
-        duration: 250
-    }
-
-}

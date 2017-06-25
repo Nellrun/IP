@@ -115,6 +115,15 @@ ApplicationWindow {
     SettingsWindow {
         id: settingWindow
         visible: false
+
+        onTChanged: {
+            if (t == 0) {
+                leftMenu.onlyKnowledgeBase = false;
+            }
+            else {
+                leftMenu.onlyKnowledgeBase = true;
+            }
+        }
     }
 
     ColumnLayout {
@@ -161,6 +170,7 @@ ApplicationWindow {
         anchors.fill: parent
 
         LeftMenu {
+            id: leftMenu
             width: 64
             anchors.top: parent.top
             anchors.bottom: parent.bottom
@@ -180,44 +190,17 @@ ApplicationWindow {
 
             TextEditorArea {
                 id: textEditor
+                textEditorText: "one"
             }
 
             TextEditorArea {
-
+                textEditorText: "two"
             }
 
             TextEditorArea {
-
+                textEditorText: "three"
             }
         }
-
-//        TabView {
-//            id: tabView
-//            style: TabViewStyle {
-//                tab: Item {}
-//            }
-
-//            Layout.fillHeight: true
-//            Layout.fillWidth: true
-
-
-//            Tab {
-//                TextEditorArea {
-//                    id: textEditor
-//                }
-//            }
-
-//            Tab {
-//                TextEditorArea {
-//                }
-//            }
-
-//            Tab {
-//                TextEditorArea {
-//                }
-//            }
-
-//        }
     }
 
     FileReader {
