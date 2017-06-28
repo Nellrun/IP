@@ -171,6 +171,7 @@ ApplicationWindow {
 
         LeftMenu {
             id: leftMenu
+            objectName: "leftMenu"
             width: 64
             anchors.top: parent.top
             anchors.bottom: parent.bottom
@@ -190,6 +191,7 @@ ApplicationWindow {
 
             TextEditorArea {
                 id: textEditor
+                objectName: "knowledgeBase"
                 textEditorText: "one"
             }
 
@@ -198,7 +200,11 @@ ApplicationWindow {
             }
 
             TextEditorArea {
+                objectName: "outputTextEditor"
                 textEditorText: "three"
+                onTextEditorTextChanged: {
+                    leftMenu.index = 2
+                }
             }
         }
     }

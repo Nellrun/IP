@@ -4,7 +4,7 @@ Predicate::Predicate(std::string name, std::vector<Symbol*>* symbols, bool negat
 {
     this->name = name;
     this->negative = negative;
-    this->symbols = symbols;
+    this->symbols = *symbols;
 }
 
 Predicate::Predicate(std::string name, bool negative = false) {
@@ -16,25 +16,30 @@ bool Predicate::isNegative() {
     return negative;
 }
 
-std::string Predicate::getString()
+std::string Predicate::toString()
 {
     std::string out = this->name + "(";
-    for (unsigned i = 0; i < symbols->size() - 1; i++) {
-        out += (*symbols)[i]->getString() + ", ";
+    for (unsigned i = 0; i < symbols.size() - 1; i++) {
+        out += symbols[i]->toString() + ", ";
     }
-    out += (*symbols)[symbols->size() - 1]->getString() + ")";
+    out += symbols[symbols.size() - 1]->toString() + ")";
 
-    return negative ? "!" + out : out;
+    return negative ? "not " + out : out;
+}
+
+Predicate* Predicate::addSymbol(Symbol* s) {
+    symbols.push_back(s);
+    return this;
 }
 
 std::vector<Symbol*>* Predicate::getSymbols()
 {
-    return symbols;
+    return &symbols;
 }
 
 int Predicate::getSize()
 {
-    return symbols->size();
+    return symbols.size();
 }
 
 std::string Predicate::getName()
@@ -45,12 +50,6 @@ std::string Predicate::getName()
 Predicate* Predicate::copy()
 {
     Predicate* p = new Predicate(*this);
-    //p->symbols = new Symbol*[length];
-
-    //for (int i = 0; i < length; i++) {
-    //	p->symbols[i] = symbols[i]->copy();
-    //}
-
     return p;
 }
 

@@ -12,6 +12,7 @@ public:
 signals:
 
 public slots:
+    void onRunButtonClick();
 };
 
 #endif // SIGNALHANDLER_H

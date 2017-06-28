@@ -11,12 +11,16 @@ class Predicate
 public:
     Predicate(std::string name, std::vector<Symbol*> *symbols, bool negative);
     Predicate(std::string name, bool negative);
-    bool isNegative();
-    std::string getString();
+
+    Predicate* addSymbol(Symbol* s);
     std::vector<Symbol*>* getSymbols();
+
+    bool isNegative();
+    std::string toString();
     int getSize();
     std::string getName();
     Predicate* copy();
+
     ~Predicate();
 
 
@@ -24,7 +28,7 @@ public:
 private:
     std::string name;
     bool negative;
-    std::vector<Symbol*> *symbols;
+    std::vector<Symbol*> symbols;
 };
 
 #endif // PREDICATE_H

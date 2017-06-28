@@ -8,11 +8,7 @@
 #include "variable.h"
 #include "constant.h"
 #include <vector>
-
-struct Statement
-{
-    std::vector<Predicate*>* predicates;
-};
+#include "statement.h"
 
 
 class Parser
@@ -23,6 +19,8 @@ public:
     ~Parser();
 
     std::vector<Statement*>* parse();
+
+    std::string errorMsg;
 
 private:
     Lexer* lexer;

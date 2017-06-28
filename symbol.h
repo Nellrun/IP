@@ -13,7 +13,7 @@ public:
 
     virtual std::string getName();
     virtual void setName(std::string);
-    virtual std::string getString();
+    virtual std::string toString();
     virtual bool cmp(Symbol b);
     virtual bool isTerm();
     virtual Symbol* copy();

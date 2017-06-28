@@ -9,51 +9,56 @@ FuncConstant::FuncConstant(std::string name) {
 FuncConstant::FuncConstant(std::string name, std::vector<Symbol*> *symbols) {
     this->name = name;
     this->negative = negative;
-    this->symbols = symbols;
+    this->symbols = *symbols;
 }
 
-std::string FuncConstant::getString() {
+std::string FuncConstant::toString() {
     std::string out = this->name + "(";
-    for (unsigned i = 0; i < symbols->size() - 1; i++) {
-        out += (*symbols)[i]->getString() + ", ";
+    for (unsigned i = 0; i < (symbols.size() - 1); i++) {
+        out += symbols[i]->toString() + ", ";
     }
 
     //for (auto &elem : symbols) {
-    //	out += elem->getString() + ", ";
+    //	out += elem->toString() + ", ";
     //}
 
-    out += (*symbols)[symbols->size() - 1]->getString() + ")";
+    out += symbols[symbols.size() - 1]->toString() + ")";
 
     return out;
 }
 
+FuncConstant* FuncConstant::addSymbol(Symbol* s) {
+    symbols.push_back(s);
+    return this;
+}
+
 std::vector<Symbol*>* FuncConstant::getSymbols()
 {
-    return symbols;
+    return &symbols;
 }
 
 void FuncConstant::setSymbols(std::vector<Symbol*> *s)
 {
-    this->symbols = s;
+    this->symbols = *s;
 }
 
 void FuncConstant::replace(Symbol* from, Symbol* to)
 {
-    for (unsigned i = 0; i < symbols->size(); i++) {
-        if ((*symbols)[i]->cmp(*from)) {
-            (*symbols)[i] = to;
+    for (unsigned i = 0; i < symbols.size(); i++) {
+        if (symbols[i]->cmp(*from)) {
+            symbols[i] = to;
         }
-        if (typeid((*(*symbols)[i])) == typeid(FuncConstant)) {
-            ((FuncConstant*)(*symbols)[i])->replace(from, to);
+        if (typeid((*symbols[i])) == typeid(FuncConstant)) {
+            ((FuncConstant*)symbols[i])->replace(from, to);
         }
     }
 }
 
 bool FuncConstant::contain(Symbol * s)
 {
-    for (unsigned i = 0; i < symbols->size(); i++) {
-        if ((*symbols)[i]->cmp(*s)) return true;
-        if ((typeid(symbols[i]) == typeid(FuncConstant)) && (((FuncConstant*)(*symbols)[i])->contain(s))) return true;
+    for (unsigned i = 0; i < symbols.size(); i++) {
+        if (symbols[i]->cmp(*s)) return true;
+        if ((typeid(symbols[i]) == typeid(FuncConstant)) && (((FuncConstant*)symbols[i])->contain(s))) return true;
     }
     return false;
 }
@@ -62,15 +67,17 @@ Symbol * FuncConstant::copy()
 {
     FuncConstant* cp = new FuncConstant(*this);
 
+    return cp;
+
     //cp->symbols = new Symbol*[length];
 
     //cp->symbols;
 
-    for (unsigned i = 0; i < symbols->size(); i++) {
-        (*cp->symbols)[i] = (*symbols)[i]->copy();
-    }
+//    for (unsigned i = 0; i < symbols->size(); i++) {
+//        (*cp->symbols)[i] = (*symbols)[i]->copy();
+//    }
 
-    return (Symbol*)cp;
+//    return (Symbol*)cp;
 }
 
 FuncConstant::~FuncConstant() {

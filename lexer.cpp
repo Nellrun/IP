@@ -51,7 +51,7 @@ Lexer::~Lexer()
 void Lexer::error(std::string msg)
 {
     std::cout << "Lexer error: " << msg << " at line " << line << " column " << column << std::endl;
-    exit(1);
+//    exit(1);
 }
 
 void Lexer::getc()

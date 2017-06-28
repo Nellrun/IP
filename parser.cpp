@@ -22,10 +22,6 @@ std::vector<Statement*>* Parser::parse()
     Statement* s = statement();
     statements->push_back(s);
 
-    for (auto &pred : (*s->predicates)) {
-        std::cout << pred->getString() << " or ";
-    }
-
     while (lexer->sym != Lexer_EOF) {
         statements->push_back(statement());
     }
@@ -35,8 +31,10 @@ std::vector<Statement*>* Parser::parse()
 
 void Parser::error(std::string msg)
 {
-    std::cout << "Parser error: " << msg << " at line " << lexer->line << " column " << lexer->column << std::endl;
-    exit(1);
+    errorMsg = "Parser error: " + msg + " at line " + std::to_string(lexer->line)
+            + " column " + std::to_string(lexer->column);
+    std::cout << errorMsg << std::endl;
+//    exit(1);
 }
 
 Symbol* Parser::term()
@@ -57,6 +55,10 @@ Symbol* Parser::term()
             }
         }
     }
+    else {
+
+    }
+    return NULL;
 }
 
 std::vector<Symbol*>* Parser::parenExpr()
@@ -92,7 +94,7 @@ Predicate * Parser::predicate()
     if (lexer->sym == Lexer_ID) {
         std::string value = lexer->value;
         lexer->nextTok();
-        return new Predicate(value, parenExpr());
+        return new Predicate(value, parenExpr(), false);
     }
     else if (lexer->sym == Lexer_NOT) {
         lexer->nextTok();
@@ -113,12 +115,11 @@ Predicate * Parser::predicate()
 Statement* Parser::statement()
 {
     Statement* s = new Statement();
-    s->predicates = new std::vector<Predicate*>;
-    s->predicates->push_back(predicate());
+    s->addPredicate(predicate());
 
     while (lexer->sym == Lexer_OR) {
         lexer->nextTok();
-        s->predicates->push_back(predicate());
+        s->addPredicate(predicate());
     }
 
     if (lexer->sym == Lexer_DOT) {

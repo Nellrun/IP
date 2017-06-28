@@ -30,11 +30,11 @@ void Lambda::add(Symbol* from, Symbol* to)
     }
 }
 
-std::string Lambda::getString()
+std::string Lambda::toString()
 {
     std::string out = "{";
     for (std::list<Replace>::iterator iter = replaceList.begin(); iter != replaceList.end(); iter++) {
-        out += (*iter).to->getString() + "/" + (*iter).from->getString() + ",";
+        out += (*iter).to->toString() + "/" + (*iter).from->toString() + ",";
     }
     out += "}";
     return out;

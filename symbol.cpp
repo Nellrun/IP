@@ -12,7 +12,7 @@ void Symbol::setName(std::string name) {
     this->name = name;
 }
 
-inline std::string Symbol::getString()
+inline std::string Symbol::toString()
 {
     return name;
 }

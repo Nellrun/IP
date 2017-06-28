@@ -8,6 +8,9 @@ Item {
     property int index: 0
     property bool onlyKnowledgeBase: false
 
+
+    signal runButtonClick
+
     onOnlyKnowledgeBaseChanged: {
         if (onlyKnowledgeBase) {
             secondTab.visible = false
@@ -45,6 +48,7 @@ Item {
                 width: parent.width
                 imageSource: "icons/ic_view_headline_white_24dp_2x.png"
                 labelText: ""
+                selected: true
                 onClicked: {
                     index = 0
                 }
@@ -76,6 +80,10 @@ Item {
             width: parent.width
             imageSource: "icons/ic_play_arrow_white_24dp_2x.png"
             anchors.bottom: parent.bottom
+
+            onClicked: {
+                runButtonClick()
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ public:
 
     std::list<Replace> getList();
     void add(Symbol* from, Symbol* to);
-    std::string getString();
+    std::string toString();
 
 
 private:

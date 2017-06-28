@@ -7,7 +7,6 @@
         <file>qtquickcontrols2.conf</file>
         <file>LeftMenu.qml</file>
         <file>MenuElement.qml</file>
-        <file>settings.qml</file>
         <file>icons/ic_create_white_24dp_1x.png</file>
         <file>icons/ic_create_white_24dp_2x.png</file>
         <file>icons/ic_play_arrow_white_24dp_1x.png</file>

@@ -10,16 +10,19 @@ class FuncConstant:Symbol
 public:
     FuncConstant(std::string name, std::vector<Symbol*> *symbols);
     FuncConstant(std::string name);
-    std::string getString();
+    std::string toString();
+
     std::vector<Symbol*>* getSymbols();
     void setSymbols(std::vector<Symbol*>* s);
+    FuncConstant* addSymbol(Symbol* s);
+
     void replace(Symbol* from, Symbol* to);
     bool contain(Symbol* s);
     Symbol* copy();
     ~FuncConstant();
 
 private:
-    std::vector<Symbol*>* symbols;
+    std::vector<Symbol*> symbols;
     bool negative;
 };
 
