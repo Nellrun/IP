@@ -2,12 +2,13 @@
 
 //Функция унификации двух предикатов
 Lambda* unification(Predicate* a, Predicate* b) {
-    //Проверка равенства предикатов
-    if (a->getName() != b->getName()) return NULL;
-    if (a->isNegative() != b->isNegative()) return NULL;
-    if (a->getSize() != b->getSize()) return NULL;
 
     Lambda* l = new Lambda();
+
+    //Проверка равенства предикатов
+    if (a->getName() != b->getName()) return l;
+    if (a->isNegative() != b->isNegative()) return l;
+    if (a->getSize() != b->getSize()) return l;
 
     for (int i = 0; i < a->getSize(); i++) {
         Symbol* ai = (*a->getSymbols())[i];
@@ -15,7 +16,7 @@ Lambda* unification(Predicate* a, Predicate* b) {
 
         //Если нет переменных и литералы не равны, то унификация невозможна
         if ((typeid(*ai) != typeid(Variable)) && (typeid(*bi) != typeid(Variable)) && (!ai->cmp(*bi))) {
-            return NULL;
+            return new Lambda();
         }
 
         if (typeid(*bi) == typeid(Variable)) {
@@ -32,7 +33,7 @@ Lambda* unification(Predicate* a, Predicate* b) {
                     l->add(ai, bi);
                 }
                 else {
-                    return NULL;
+                    return new Lambda();
                 }
             }
         }

@@ -196,7 +196,8 @@ ApplicationWindow {
             }
 
             TextEditorArea {
-                textEditorText: "two"
+                textEditorText: "Escort(Mary, z)."
+                objectName: "targetStatements"
             }
 
             TextEditorArea {

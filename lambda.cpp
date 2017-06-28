@@ -32,6 +32,8 @@ void Lambda::add(Symbol* from, Symbol* to)
 
 std::string Lambda::toString()
 {
+    if (replaceList.size() == 0) return "1";
+
     std::string out = "{";
     for (std::list<Replace>::iterator iter = replaceList.begin(); iter != replaceList.end(); iter++) {
         out += (*iter).to->toString() + "/" + (*iter).from->toString() + ",";
