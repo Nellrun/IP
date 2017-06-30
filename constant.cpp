@@ -1,11 +1,11 @@
 #include "constant.h"
 
 Constant::Constant(std::string name) {
-    this->name = name;
+    id = SymbolTable::getInstance()->addSymbol(name);
 }
 
 Constant::Constant(std::string name, std::string value) {
-    this->name = name;
+    id = SymbolTable::getInstance()->addSymbol(name);
     this->value = value;
 }
 

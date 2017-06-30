@@ -4,15 +4,14 @@ Predicate::Predicate() {
 
 }
 
-Predicate::Predicate(std::string name, std::vector<Symbol>* symbols, bool negative = false)
-{
-    this->name = name;
+Predicate::Predicate(std::string name, std::vector<Symbol> *symbols, bool negative) {
+    id = SymbolTable::getInstance()->addSymbol(name);
     this->negative = negative;
     this->symbols = *symbols;
 }
 
 Predicate::Predicate(std::string name, bool negative = false) {
-    this->name = name;
+    id = SymbolTable::getInstance()->addSymbol(name);
     this->negative = negative;
 }
 

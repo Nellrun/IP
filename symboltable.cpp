@@ -1,17 +1,19 @@
 #include "symboltable.h"
 
+SymbolTable* SymbolTable::instance = NULL;
+
 SymbolTable::SymbolTable()
 {
 
 }
 
-static SymbolTable* SymbolTable::getInstance() {
-    if (instance == NULL) {
-        instance = new SymbolTable();
-    }
+//SymbolTable* SymbolTable::getInstance() {
+//    if (instance == NULL) {
+//        instance = new SymbolTable();
+//    }
 
-    return instance;
-}
+//    return instance;
+//}
 
 int SymbolTable::addSymbol(std::string name) {
     names.push_back(name);

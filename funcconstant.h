@@ -8,6 +8,8 @@
 class FuncConstant: public Symbol
 {
 public:
+
+    FuncConstant();
     FuncConstant(std::string name, std::vector<Symbol> *symbols);
     FuncConstant(std::string name);
     std::string toString();
@@ -18,7 +20,7 @@ public:
 
     int getSize();
 
-    void replace(Symbol* from, Symbol* to);
+    void FuncConstant::replace(int from, int to);
     bool contain(Symbol* s);
     Symbol* copy();
     ~FuncConstant();

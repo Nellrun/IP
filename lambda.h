@@ -6,11 +6,12 @@
 #include <list>
 #include <string>
 #include <typeinfo>
+#include "symboltable.h"
 
 struct Replace
 {
-    Symbol* from;
-    Symbol* to;
+    int from;
+    int to;
 };
 
 
@@ -21,7 +22,7 @@ public:
     ~Lambda();
 
     std::list<Replace> getList();
-    void add(Symbol* from, Symbol* to);
+    void add(int from, int to);
     std::string toString();
 
     int getSize();

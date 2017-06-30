@@ -2,18 +2,22 @@
 
 #include <typeinfo>
 
+FuncConstant::FuncConstant() {
+
+}
+
 FuncConstant::FuncConstant(std::string name) {
-    this->name = name;
+   id = SymbolTable::getInstance()->addSymbol(name);
 }
 
 FuncConstant::FuncConstant(std::string name, std::vector<Symbol> *symbols) {
-    this->name = name;
+    id = SymbolTable::getInstance()->addSymbol(name);
     this->negative = negative;
     this->symbols = *symbols;
 }
 
 std::string FuncConstant::toString() {
-    std::string out = this->name + "(";
+    std::string out = SymbolTable::getInstance()->getSymbol(id) + "(";
     for (unsigned i = 0; i < (symbols.size() - 1); i++) {
         out += symbols[i].toString() + ", ";
     }
@@ -42,11 +46,11 @@ int FuncConstant::getSize() {
     return symbols.size();
 }
 
-void FuncConstant::replace(Symbol* from, Symbol* to)
+void FuncConstant::replace(int from, int to)
 {
     for (unsigned i = 0; i < symbols.size(); i++) {
-        if (symbols[i].cmp(*from)) {
-            symbols[i] = *to;
+        if (symbols[i].getID() == from) {
+            symbols[i].setID(to);
         }
         if (typeid(symbols[i]) == typeid(FuncConstant)) {
             ((FuncConstant*) &symbols[i])->replace(from, to);

@@ -17,21 +17,21 @@ int Lambda::getSize() {
     return replaceList.size();
 }
 
-void Lambda::add(Symbol* from, Symbol* to)
+void Lambda::add(int from, int to)
 {
     //bool a = typeid(*from) == typeid(*to);
     //bool b = typeid(*from) == typeid(Variable);
 
     Replace r;
-    r.from = from->copy();
-    r.to = to->copy();
+    r.from = from;
+    r.to = to;
     replaceList.push_back(r);
 
-    for (std::list<Replace>::iterator iter = replaceList.begin(); iter != replaceList.end(); iter++) {
-        if (typeid(*((*iter).to)) == typeid(FuncConstant)) {
-            ((FuncConstant*)((*iter).to))->replace(r.from, r.to);
-        }
-    }
+//    for (std::list<Replace>::iterator iter = replaceList.begin(); iter != replaceList.end(); iter++) {
+//        if (typeid(*((*iter).to)) == typeid(FuncConstant)) {
+//            ((FuncConstant*)((*iter).to))->replace(r.from, r.to);
+//        }
+//    }
 }
 
 std::string Lambda::toString()
@@ -39,9 +39,12 @@ std::string Lambda::toString()
     if (replaceList.size() == 0) return "1";
 
     std::string out = "{";
-    for (std::list<Replace>::iterator iter = replaceList.begin(); iter != replaceList.end(); iter++) {
-        out += (*iter).to->toString() + "/" + (*iter).from->toString() + ",";
+
+    for (Replace elem: replaceList) {
+        out += SymbolTable::getInstance()->getSymbol(elem.to) + "/"
+                + SymbolTable::getInstance()->getSymbol(elem.from) + ",";
     }
+
     out += "}";
     return out;
 }

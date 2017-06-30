@@ -2,6 +2,7 @@
 #define SYMBOLTABLE_H
 
 #include <vector>
+#include <string>
 
 class SymbolTable
 {
@@ -10,11 +11,17 @@ public:
 
     int addSymbol(std::string name);
     std::string getSymbol(int id);
-    static SymbolTable* getInstance();
+    static SymbolTable* getInstance() {
+        if (instance == NULL) {
+            instance = new SymbolTable();
+        }
+
+        return instance;
+    }
 
 private:
     std::vector<std::string> names;
-    SymbolTable* instance;
+    static SymbolTable* instance;
 };
 
 #endif // SYMBOLTABLE_H

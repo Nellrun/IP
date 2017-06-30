@@ -1,7 +1,7 @@
 #include "variable.h"
 
 Variable::Variable(std::string name) {
-    this->name = name;
+    id = SymbolTable::getInstance()->addSymbol(name);
 }
 
 Symbol * Variable::copy()

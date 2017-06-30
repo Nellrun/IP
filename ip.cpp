@@ -26,11 +26,11 @@ Lambda* unification(Predicate* a, Predicate* b) {
 
         if (typeid(*ai) == typeid(Variable)) {
             if (typeid(*bi) != typeid(FuncConstant)) {
-                l->add(ai, bi);
+                l->add(ai->getID(), bi->getID());
             }
             else {
                 if (!(((FuncConstant*)bi)->contain(ai))) {
-                    l->add(ai, bi);
+                    l->add(ai->getID(), bi->getID());
                 }
                 else {
                     return new Lambda();
