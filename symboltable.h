@@ -19,6 +19,8 @@ public:
         return instance;
     }
 
+    std::string toString();
+
 private:
     std::vector<std::string> names;
     static SymbolTable* instance;

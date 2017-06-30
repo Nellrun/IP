@@ -18,7 +18,7 @@ std::string Symbol::toString()
 }
 
 bool Symbol::cmp(Symbol b) {
-    return b.getID() == id;
+    return b.getID() == this->id;
 }
 
 bool Symbol::isTerm()

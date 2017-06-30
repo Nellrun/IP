@@ -11,8 +11,8 @@ Lambda* unification(Predicate* a, Predicate* b) {
     if (a->getSize() != b->getSize()) return l;
 
     for (int i = 0; i < a->getSize(); i++) {
-        Symbol* ai = &(*a->getSymbols())[i];
-        Symbol* bi = &(*b->getSymbols())[i];
+        Symbol* ai = (*a->getSymbols())[i];
+        Symbol* bi = (*b->getSymbols())[i];
 
         //Если нет переменных и литералы не равны, то унификация невозможна
         if ((typeid(*ai) != typeid(Variable)) && (typeid(*bi) != typeid(Variable)) && (!ai->cmp(*bi))) {
@@ -21,16 +21,16 @@ Lambda* unification(Predicate* a, Predicate* b) {
 
         if (typeid(*bi) == typeid(Variable)) {
             ai = bi;
-            bi = &(*a->getSymbols())[i];
+            bi = (*a->getSymbols())[i];
         }
 
         if (typeid(*ai) == typeid(Variable)) {
             if (typeid(*bi) != typeid(FuncConstant)) {
-                l->add(ai->getID(), bi->getID());
+                l->add(ai, bi);
             }
             else {
                 if (!(((FuncConstant*)bi)->contain(ai))) {
-                    l->add(ai->getID(), bi->getID());
+                    l->add(ai, bi);
                 }
                 else {
                     return new Lambda();
@@ -47,12 +47,15 @@ Lambda* unification(Predicate* a, Predicate* b) {
 std::vector<W*>* part_divide(Statement* b, Statement* d) {
     std::vector<W*>* res = new std::vector<W*>();
 
-    for (Predicate dP : *d->getPredicates()) {
-        for (Predicate bP : *b->getPredicates()) {
+    for (auto dP : *d->getPredicates()) {
+        int i = 0;
+        for (auto bP : *b->getPredicates()) {
             W* w = new W();
-            Lambda* l = unification(&bP, &dP);
+            Lambda* l = unification(bP, dP);
             if (l->getSize() > 0) {
-//                w->n =
+                w->n = b->replace(l, i);
+                w->d = d->replace(l, -1);
+                w->q = g;
             }
             else {
                 w->q = 1;
@@ -60,6 +63,7 @@ std::vector<W*>* part_divide(Statement* b, Statement* d) {
 
             res->push_back(w);
             delete l;
+            i++;
         }
     }
 

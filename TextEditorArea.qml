@@ -44,6 +44,8 @@ Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
+            selectByMouse: true
+
             onLineCountChanged: {
                 lineCountModel.clear()
                 for (var i = 1; i <= textEditor.lineCount; i++) {

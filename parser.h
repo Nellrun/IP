@@ -27,8 +27,8 @@ private:
 
     void error(std::string msg);
     Symbol* term();
-    std::vector<Symbol>* parenExpr();
-    std::vector<Symbol>* expr();
+    std::vector<Symbol*>* parenExpr();
+    std::vector<Symbol*>* expr();
     Predicate* predicate();
     Statement* statement();
 

@@ -17,14 +17,14 @@ int Lambda::getSize() {
     return replaceList.size();
 }
 
-void Lambda::add(int from, int to)
+void Lambda::add(Symbol* from, Symbol* to)
 {
     //bool a = typeid(*from) == typeid(*to);
     //bool b = typeid(*from) == typeid(Variable);
 
     Replace r;
-    r.from = from;
-    r.to = to;
+    r.from = from->copy();
+    r.to = to->copy();
     replaceList.push_back(r);
 
 //    for (std::list<Replace>::iterator iter = replaceList.begin(); iter != replaceList.end(); iter++) {
@@ -41,8 +41,8 @@ std::string Lambda::toString()
     std::string out = "{";
 
     for (Replace elem: replaceList) {
-        out += SymbolTable::getInstance()->getSymbol(elem.to) + "/"
-                + SymbolTable::getInstance()->getSymbol(elem.from) + ",";
+        out += SymbolTable::getInstance()->getSymbol(elem.to->getID()) + "/"
+                + SymbolTable::getInstance()->getSymbol(elem.from->getID()) + ",";
     }
 
     out += "}";

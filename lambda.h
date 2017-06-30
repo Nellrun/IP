@@ -10,8 +10,8 @@
 
 struct Replace
 {
-    int from;
-    int to;
+    Symbol* from;
+    Symbol* to;
 };
 
 
@@ -22,7 +22,7 @@ public:
     ~Lambda();
 
     std::list<Replace> getList();
-    void add(int from, int to);
+    void add(Symbol* from, Symbol* to);
     std::string toString();
 
     int getSize();

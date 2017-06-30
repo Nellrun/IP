@@ -61,14 +61,14 @@ Symbol* Parser::term()
     return NULL;
 }
 
-std::vector<Symbol>* Parser::parenExpr()
+std::vector<Symbol*>* Parser::parenExpr()
 {
     if (lexer->sym != Lexer_LPAR) {
         error("\"(\" expected");
     }
     lexer->nextTok();
 
-    std::vector<Symbol>* s = expr();
+    std::vector<Symbol*>* s = expr();
 
     if (lexer->sym != Lexer_RPAR) {
         error("\")\" expected");
@@ -78,13 +78,13 @@ std::vector<Symbol>* Parser::parenExpr()
     return s;
 }
 
-std::vector<Symbol>* Parser::expr()
+std::vector<Symbol*>* Parser::expr()
 {
-    std::vector<Symbol>* v = new std::vector<Symbol>;
-    v->push_back(*term());
+    auto v = new std::vector<Symbol*>;
+    v->push_back(term());
     while (lexer->sym == Lexer_COMMA) {
         lexer->nextTok();
-        v->push_back(*term());
+        v->push_back(term());
     }
     return v;
 }

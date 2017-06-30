@@ -12,8 +12,8 @@
 
 struct W
 {
-    Statement n;
-    Statement d;
+    Statement* n;
+    Statement* d;
     int q;
 };
 

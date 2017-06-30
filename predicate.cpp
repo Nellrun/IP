@@ -4,7 +4,7 @@ Predicate::Predicate() {
 
 }
 
-Predicate::Predicate(std::string name, std::vector<Symbol> *symbols, bool negative) {
+Predicate::Predicate(std::string name, std::vector<Symbol*> *symbols, bool negative) {
     id = SymbolTable::getInstance()->addSymbol(name);
     this->negative = negative;
     this->symbols = *symbols;
@@ -19,19 +19,19 @@ bool Predicate::isNegative() {
     return negative;
 }
 
-//std::string Predicate::toString()
-//{
-//    std::string out = this->name + "(";
-//    for (unsigned i = 0; i < symbols.size() - 1; i++) {
-//        out += symbols[i].toString() + ", ";
-//    }
-//    out += symbols[symbols.size() - 1].toString() + ")";
+std::string Predicate::toString()
+{
+    std::string out = SymbolTable::getInstance()->getSymbol(id) + "(";
+    for (unsigned i = 0; i < symbols.size() - 1; i++) {
+        out += symbols[i]->toString() + ", ";
+    }
+    out += symbols[symbols.size() - 1]->toString() + ")";
 
-//    return negative ? "not " + out : out;
-//}
+    return negative ? "not " + out : out;
+}
 
 Predicate* Predicate::addSymbol(Symbol* s) {
-    symbols.push_back(*s);
+    symbols.push_back(s);
     return this;
 }
 
