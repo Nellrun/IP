@@ -1,26 +1,25 @@
 #include "symbol.h"
+#include "symboltable.h"
 
 Symbol::Symbol(std::string name) {
-    this->name = name;
+    id = SymbolTable.getInstance()->addSymbol(name);
 }
 
-std::string Symbol::getName() {
-    return this->name;
+int Symbol::getID() {
+    return this->id;
 }
 
-void Symbol::setName(std::string name) {
-    this->name = name;
+void Symbol::setID(int id) {
+    this->id = id;
 }
 
 inline std::string Symbol::toString()
 {
-    return name;
+    return SymbolTable.getInstance()->getSymbol(id);
 }
 
 bool Symbol::cmp(Symbol b) {
-    //if (typeid(*this) != typeid(b)) return false;
-    if (name != b.getName()) return false;
-    return true;
+    return b.getID() == id;
 }
 
 inline bool Symbol::isTerm()

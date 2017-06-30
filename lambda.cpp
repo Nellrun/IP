@@ -13,6 +13,10 @@ std::list<Replace> Lambda::getList()
     return replaceList;
 }
 
+int Lambda::getSize() {
+    return replaceList.size();
+}
+
 void Lambda::add(Symbol* from, Symbol* to)
 {
     //bool a = typeid(*from) == typeid(*to);

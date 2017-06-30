@@ -36,18 +36,18 @@ void SignalHandler::onRunButtonClick() {
         out += QString::fromStdString(stat->toString()) + '\n';
     }
 
-    out += "\nUnification:\n";
+//    out += "\nUnification:\n";
 
-    for (Statement* tgt: *target) {
-        for (Predicate* oP : *tgt->getPredicates())
-            for (Statement* stat: *disj) {
-                for (Predicate* p : *stat->getPredicates()) {
-                    out += "\t" + QString::fromStdString(p->toString()) + " <-> " +
-                            QString::fromStdString(oP->toString()) + " = " +
-                            QString::fromStdString(unification(p, oP)->toString()) + "\n";
-                }
-            }
-    }
+//    for (Statement* tgt: *target) {
+//        for (Predicate* oP : *tgt->getPredicates())
+//            for (Statement* stat: *disj) {
+//                for (Predicate* p : *stat->getPredicates()) {
+//                    out += "\t" + QString::fromStdString(p->toString()) + " <-> " +
+//                            QString::fromStdString(oP->toString()) + " = " +
+//                            QString::fromStdString(unification(p, oP)->toString()) + "\n";
+//                }
+//            }
+//    }
 
 
     output->setProperty("textEditorText", out);

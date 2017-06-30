@@ -24,6 +24,8 @@ public:
     void add(Symbol* from, Symbol* to);
     std::string toString();
 
+    int getSize();
+
 
 private:
     std::list<Replace> replaceList;

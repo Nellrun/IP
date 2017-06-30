@@ -5,24 +5,26 @@
 #include <vector>
 #include "symbol.h"
 
-class FuncConstant:Symbol
+class FuncConstant: public Symbol
 {
 public:
-    FuncConstant(std::string name, std::vector<Symbol*> *symbols);
+    FuncConstant(std::string name, std::vector<Symbol> *symbols);
     FuncConstant(std::string name);
     std::string toString();
 
-    std::vector<Symbol*>* getSymbols();
-    void setSymbols(std::vector<Symbol*>* s);
+    std::vector<Symbol>* getSymbols();
+    void setSymbols(std::vector<Symbol>* s);
     FuncConstant* addSymbol(Symbol* s);
+
+    int getSize();
 
     void replace(Symbol* from, Symbol* to);
     bool contain(Symbol* s);
     Symbol* copy();
     ~FuncConstant();
 
-private:
-    std::vector<Symbol*> symbols;
+protected:
+    std::vector<Symbol> symbols;
     bool negative;
 };
 
