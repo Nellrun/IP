@@ -4,13 +4,17 @@ Statement::Statement()
 {
 }
 
-Statement* Statement::addPredicate(Predicate* p) {
+void Statement::addPredicate(Predicate* p) {
     predicates.push_back(p);
-    return this;
+//    return this;
 }
 
 std::vector<Predicate*>* Statement::getPredicates() {
     return &predicates;
+}
+
+int Statement::getSize() {
+    return predicates.size();
 }
 
 Statement* Statement::replace(Lambda *l, int id = -1) {

@@ -17,6 +17,7 @@ public:
 //    std::vector<Symbol>* getSymbols();
 
     bool isNegative();
+    void setNegative(bool);
     std::string toString();
 //    int getSize();
 //    std::string getName();

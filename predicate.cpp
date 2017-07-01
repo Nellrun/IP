@@ -15,6 +15,10 @@ Predicate::Predicate(std::string name, bool negative = false) {
     this->negative = negative;
 }
 
+void Predicate::setNegative(bool l) {
+    negative = l;
+}
+
 bool Predicate::isNegative() {
     return negative;
 }
@@ -52,7 +56,13 @@ Predicate* Predicate::addSymbol(Symbol* s) {
 
 Predicate* Predicate::copy()
 {
-    Predicate* p = new Predicate(*this);
+    Predicate* p = new Predicate();
+    *p = *this;
+
+    for (unsigned i = 0; i < symbols.size(); i++) {
+        symbols[i] = symbols[i]->copy();
+    }
+
     return p;
 }
 

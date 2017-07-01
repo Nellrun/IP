@@ -1,4 +1,5 @@
 #include "ip.h"
+#include "display.h"
 
 //Функция унификации двух предикатов
 Lambda* unification(Predicate* a, Predicate* b) {
@@ -56,9 +57,17 @@ std::vector<W*>* part_divide(Statement* b, Statement* d) {
                 w->n = b->replace(l, i);
                 w->d = d->replace(l, -1);
                 w->q = g;
+
+                if (b->getSize() == 0) {
+                    w->q = 0;
+                }
             }
             else {
                 w->q = 1;
+            }
+
+            if (w->q == g) {
+                Display::getInstance()->printLine("b = " + w->n->toString() + " d = " + w->d->toString(), 1);
             }
 
             res->push_back(w);
@@ -70,47 +79,62 @@ std::vector<W*>* part_divide(Statement* b, Statement* d) {
     return res;
 }
 
-//std::list<W> w_operation(Predicate** D, int sizeD, Predicate** d, int sized) {
-//    std::list<W> out;
+N* divide(std::vector<Statement*>* b, Statement* d) {
+    // Общая структура для хранения текущих остатков и делителей
+    N* n = new N();
 
-//    for (int i = 0; i < sizeD; i++) {
-//        for (int j = 0; j < sized; j++) {
-//            Lambda* l = unification(D[i], d[j]);
+    for (auto stat: *b) {
+        if (stat->getSize() == 1) continue;
+        W* w = new W();
+        w->n = stat;
+        w->d = d;
+        n->w.push_back(w);
+    }
 
-//            W w;
-//            w.l = l;
+    n->q = g;
 
-//            if (l == NULL) {
-//                w.q = 1;
-//                out.push_back(w);
-//                continue;
-//            }
+    // Флаг для проверки первой итерации
+    bool firstIter = true;
 
-//            w.sizeB = sizeD - 1;
-//            w.sizeD = sized;
+    while (n->q == g) {
+        N* ni = new N();
+        ni->q = 1;
 
-//            if (w.sizeB == 0) w.q = 0;
-//            else w.q = g;
+        for (auto w: n->w) {
+            Display::getInstance()->printLine(w->n->toString() + " / " + w->d->toString());
+            std::vector<W*>* vWi = part_divide(w->n, w->d);
 
-//            w.b = new Predicate*[w.sizeB];
-//            w.d = new Predicate*[w.sizeD];
+            for (auto wi : *vWi) {
+                ni->w.push_back(wi);
+            }
+        }
 
-//            int s = 0;
-//            for (int k = 0; k < sizeD; k++) {
-//                if (k == i) continue;
+        for (auto w : ni->w) {
+            if (w->q == 0) {
+                ni->q = 0;
+                break;
+            }
+            if (w->q == g) {
+                ni->q = g;
+                break;
+            }
+        }
 
-//                w.b[s] = D[k]->copy();
-//                s++;
-//            }
+        if (firstIter) {
+            for (Statement* stat : *b) {
+                if (stat->getSize() == 1) {
+                    Predicate* dn = (*stat->getPredicates())[0];
+                    Predicate* pn = dn->copy();
+                    pn->setNegative(!pn->isNegative());
+                    for (W* w : ni->w) {
+                        w->d->addPredicate(pn);
+                    }
+                }
+            }
+        }
 
-//            for (int k = 0; k < sized; k++) {
-//                w.d[k] = d[k]->copy();
-//            }
+        n = ni;
+    }
 
-//            out.push_back(w);
-//        }
-//    }
-
-
-//    return out;
-//}
+    return n;
+}

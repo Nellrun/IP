@@ -36,18 +36,22 @@ void SignalHandler::onRunButtonClick() {
         out += QString::fromStdString(stat->toString()) + '\n';
     }
 
-    out += "\nPart division\n";
+    divide(disj, (*target)[0]);
 
-    Statement* last = (*disj)[disj->size() - 1];
+//    out += "\nPart division\n";
 
-    auto res = part_divide(last, (*target)[0]);
+//    Statement* last = (*disj)[disj->size() - 1];
 
-    for (auto elem : *res) {
-//        out += QString::number(elem->q) + "\n";
-        if (elem->q == 1) continue;
-        out += "n = " + QString::fromStdString(elem->n->toString()) + "; d = "
-                + QString::fromStdString(elem->d->toString()) + "\n";
-    }
+
+
+//    auto res = part_divide(last, (*target)[0]);
+
+//    for (auto elem : *res) {
+////        out += QString::number(elem->q) + "\n";
+//        if (elem->q == 1) continue;
+//        out += "n = " + QString::fromStdString(elem->n->toString()) + "; d = "
+//                + QString::fromStdString(elem->d->toString()) + "\n";
+//    }
 
 //    out += QString::fromStdString(SymbolTable::getInstance()->toString());
 

@@ -28,7 +28,9 @@ bool Symbol::isTerm()
 
 Symbol * Symbol::copy()
 {
-    return new Symbol(*this);
+    Symbol* s = new Symbol();
+    *s = *this;
+    return s;
 }
 
 Symbol::~Symbol() {

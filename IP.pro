@@ -16,7 +16,8 @@ SOURCES += main.cpp \
     filereader.cpp \
     filereader.cpp \
     statement.cpp \
-    symboltable.cpp
+    symboltable.cpp \
+    display.cpp
 
 RESOURCES += qml.qrc
 
@@ -55,4 +56,5 @@ HEADERS += \
     variable.h \
     filereader.h \
     statement.h \
-    symboltable.h
+    symboltable.h \
+    display.h

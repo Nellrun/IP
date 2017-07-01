@@ -27,7 +27,7 @@ public:
 
 protected:
     std::vector<Symbol*> symbols;
-    bool negative;
+//    bool negative;
 };
 
 #endif // FUNCCONSTANT_H

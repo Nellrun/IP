@@ -17,9 +17,18 @@ struct W
     int q;
 };
 
+struct N {
+    std::vector<W*> w;
+    int q;
+};
+
 //Функция унификации двух предикатов
 Lambda* unification(Predicate* a, Predicate* b);
 
+//Частичное деление дизъюнктов
 std::vector<W*>* part_divide(Statement* b, Statement* d);
+
+//Полное деление дизъюнктов
+N* divide(std::vector<Statement*>* b, Statement* d);
 
 #endif // IP_H

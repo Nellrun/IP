@@ -12,7 +12,6 @@ FuncConstant::FuncConstant(std::string name) {
 
 FuncConstant::FuncConstant(std::string name, std::vector<Symbol*> *symbols) {
     id = SymbolTable::getInstance()->addSymbol(name);
-    this->negative = negative;
     this->symbols = *symbols;
 }
 
@@ -73,7 +72,8 @@ bool FuncConstant::contain(Symbol * s)
 
 Symbol * FuncConstant::copy()
 {
-    FuncConstant* cp = new FuncConstant(*this);
+    FuncConstant* cp = new FuncConstant();
+    *cp = *this;
 
     for (unsigned i = 0; i < symbols.size(); i++) {
         symbols[i] = symbols[i]->copy();

@@ -10,8 +10,10 @@ public:
     Statement();
 
     std::vector<Predicate*>* getPredicates();
-    Statement* addPredicate(Predicate*);
+    void addPredicate(Predicate*);
     std::string toString();
+
+    int getSize();
 
     Statement* replace(Lambda* l, int id);
 

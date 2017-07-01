@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include "filereader.h"
 #include "signalhandler.h"
+#include "display.h"
 #include <QQmlDebuggingEnabler>
 
 int main(int argc, char *argv[])
@@ -18,6 +19,8 @@ int main(int argc, char *argv[])
 
 
     QObject* root = engine.rootObjects()[0];
+
+    Display::setParent(root);
 
     SignalHandler* sh = new SignalHandler(root);
     QObject* leftMenu = root->findChild<QObject*>("leftMenu");
