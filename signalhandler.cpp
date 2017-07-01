@@ -36,6 +36,8 @@ void SignalHandler::onRunButtonClick() {
         out += QString::fromStdString(stat->toString()) + '\n';
     }
 
+    output->setProperty("textEditorText", out);
+
     divide(disj, (*target)[0]);
 
 //    out += "\nPart division\n";
@@ -67,7 +69,4 @@ void SignalHandler::onRunButtonClick() {
 //                }
 //            }
 //    }
-
-
-    output->setProperty("textEditorText", out);
 }

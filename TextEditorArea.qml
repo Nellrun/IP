@@ -46,6 +46,10 @@ Item {
 
             selectByMouse: true
 
+            onTextChanged: {
+                textEditorText = text;
+            }
+
             onLineCountChanged: {
                 lineCountModel.clear()
                 for (var i = 1; i <= textEditor.lineCount; i++) {

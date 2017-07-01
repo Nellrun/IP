@@ -30,7 +30,7 @@ Statement* Statement::replace(Lambda *l, int id = -1) {
 
     for (auto elem : l->getList()) {
         for (int i = 0; i < s->predicates.size(); i++) {
-            s->predicates[i]->replace(elem.to, elem.from);
+            s->predicates[i]->replace(elem.from, elem.to);
         }
     }
 

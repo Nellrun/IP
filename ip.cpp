@@ -48,14 +48,15 @@ Lambda* unification(Predicate* a, Predicate* b) {
 std::vector<W*>* part_divide(Statement* b, Statement* d) {
     std::vector<W*>* res = new std::vector<W*>();
 
+    int j = 0;
     for (auto dP : *d->getPredicates()) {
         int i = 0;
         for (auto bP : *b->getPredicates()) {
             W* w = new W();
-            Lambda* l = unification(bP, dP);
+            Lambda* l = unification(dP, bP);
             if (l->getSize() > 0) {
                 w->n = b->replace(l, i);
-                w->d = d->replace(l, -1);
+                w->d = d->replace(l, j);
                 w->q = g;
 
                 if (b->getSize() == 0) {
@@ -67,13 +68,19 @@ std::vector<W*>* part_divide(Statement* b, Statement* d) {
             }
 
             if (w->q == g) {
-                Display::getInstance()->printLine("b = " + w->n->toString() + " d = " + w->d->toString(), 1);
+                Display::getInstance()->printLine("q = " + std::to_string(w->q) +
+                                                  " b = " + w->n->toString() +
+                                                  " d = " + w->d->toString(), 1);
+            }
+            else {
+                Display::getInstance()->printLine("q = " + std::to_string(w->q), 1);
             }
 
             res->push_back(w);
             delete l;
             i++;
         }
+        j++;
     }
 
     return res;
@@ -88,6 +95,7 @@ N* divide(std::vector<Statement*>* b, Statement* d) {
         W* w = new W();
         w->n = stat;
         w->d = d;
+        w->q = g;
         n->w.push_back(w);
     }
 
@@ -101,6 +109,11 @@ N* divide(std::vector<Statement*>* b, Statement* d) {
         ni->q = 1;
 
         for (auto w: n->w) {
+            if (w->q != g) {
+//                Display::getInstance()->printLine("Q = " + std::to_string(w->q));
+                continue;
+            }
+
             Display::getInstance()->printLine(w->n->toString() + " / " + w->d->toString());
             std::vector<W*>* vWi = part_divide(w->n, w->d);
 
@@ -127,6 +140,7 @@ N* divide(std::vector<Statement*>* b, Statement* d) {
                     Predicate* pn = dn->copy();
                     pn->setNegative(!pn->isNegative());
                     for (W* w : ni->w) {
+                        if (w->d == NULL) continue;
                         w->d->addPredicate(pn);
                     }
                 }
