@@ -38,6 +38,9 @@ Lambda* unification(Predicate* a, Predicate* b) {
                 }
             }
         }
+        else {
+            l->add(ai, bi);
+        }
 
     }
 
@@ -59,7 +62,7 @@ std::vector<W*>* part_divide(Statement* b, Statement* d) {
                 w->d = d->replace(l, j);
                 w->q = g;
 
-                if (b->getSize() == 0) {
+                if (w->n->getSize() == 0) {
                     w->q = 0;
                 }
             }
@@ -68,6 +71,7 @@ std::vector<W*>* part_divide(Statement* b, Statement* d) {
             }
 
             if (w->q == g) {
+                Display::getInstance()->printLine(l->toString(), 1);
                 Display::getInstance()->printLine("q = " + std::to_string(w->q) +
                                                   " b = " + w->n->toString() +
                                                   " d = " + w->d->toString(), 1);
@@ -125,7 +129,7 @@ N* divide(std::vector<Statement*>* b, Statement* d) {
         for (auto w : ni->w) {
             if (w->q == 0) {
                 ni->q = 0;
-                break;
+                return ni;
             }
             if (w->q == g) {
                 ni->q = g;
@@ -134,6 +138,7 @@ N* divide(std::vector<Statement*>* b, Statement* d) {
         }
 
         if (firstIter) {
+            firstIter = false;
             for (Statement* stat : *b) {
                 if (stat->getSize() == 1) {
                     Predicate* dn = (*stat->getPredicates())[0];
@@ -145,6 +150,11 @@ N* divide(std::vector<Statement*>* b, Statement* d) {
                     }
                 }
             }
+        }
+
+        if (ni->q == 1) {
+            n->q = 1;
+            return n;
         }
 
         n = ni;

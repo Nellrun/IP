@@ -192,11 +192,11 @@ ApplicationWindow {
             TextEditorArea {
                 id: textEditor
                 objectName: "knowledgeBase"
-                textEditorText: "one"
+                textEditorText: "not P(u, z, k(s)) or not P(z, s, w) or not P(u, w, k(s))."
             }
 
             TextEditorArea {
-                textEditorText: "Escort(Mary, z)."
+                textEditorText: "Escort(Mary, z). \n # not P(g(x, y), x, y) or not P(p, f(p, q), q)."
                 objectName: "targetStatements"
             }
 

@@ -54,8 +54,8 @@ void FuncConstant::replace(Symbol* from, Symbol* to)
 //        if (symbols[i]->getID() == from) {
 //            symbols[i]->setID(to);
 //        }
-        if (typeid(symbols[i]) == typeid(FuncConstant)) {
-            ((FuncConstant*) &symbols[i])->replace(from, to);
+        if (typeid(*symbols[i]) == typeid(FuncConstant)) {
+            ((FuncConstant*) symbols[i])->replace(from, to);
 //            ((FuncConstant)symbols[i]).replace(from, to);
         }
     }

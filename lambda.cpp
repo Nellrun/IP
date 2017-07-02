@@ -27,6 +27,12 @@ void Lambda::add(Symbol* from, Symbol* to)
     r.to = to->copy();
     replaceList.push_back(r);
 
+    for (Replace elem: replaceList) {
+        if (typeid(*(elem.to)) == typeid(FuncConstant)) {
+            ((FuncConstant*) elem.to)->replace(r.from, r.to);
+        }
+    }
+
 //    for (std::list<Replace>::iterator iter = replaceList.begin(); iter != replaceList.end(); iter++) {
 //        if (typeid(*((*iter).to)) == typeid(FuncConstant)) {
 //            ((FuncConstant*)((*iter).to))->replace(r.from, r.to);
@@ -41,8 +47,8 @@ std::string Lambda::toString()
     std::string out = "{";
 
     for (Replace elem: replaceList) {
-        out += SymbolTable::getInstance()->getSymbol(elem.to->getID()) + "/"
-                + SymbolTable::getInstance()->getSymbol(elem.from->getID()) + ",";
+        out += elem.to->toString() + "/"
+                + elem.from->toString() + ",";
     }
 
     out += "}";

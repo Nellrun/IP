@@ -23,7 +23,10 @@ Statement* Statement::replace(Lambda *l, int id = -1) {
 
     int i = 0;
     for (auto p : predicates) {
-        if (i == id) continue;
+        if (i == id) {
+            i++;
+            continue;
+        }
         s->addPredicate(p->copy());
         i++;
     }
