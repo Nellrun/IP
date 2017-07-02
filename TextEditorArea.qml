@@ -25,6 +25,9 @@ Item {
                 font: textEditor.font
                 text: num
             }
+            ScrollBar.vertical: sbv
+
+//            ScrollBar.vertical: ScrollBar {policy: ScrollBar.AlwaysOn}
         }
 
         ListModel {
@@ -36,7 +39,15 @@ Item {
 
         }
 
-        TextArea {
+        Flickable {
+
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            ScrollBar.vertical: ScrollBar {id : sbv}
+            ScrollBar.horizontal: ScrollBar {}
+
+        TextArea.flickable: TextArea {
             id: textEditor
 
             text: textEditorText
@@ -45,6 +56,11 @@ Item {
             Layout.fillHeight: true
 
             selectByMouse: true
+
+//            ScrollBar.vertical: ScrollBar {policy: ScrollBar.AlwaysOn}
+
+//            ScrollBar.vertical: ScrollBar {policy: ScrollBar.AlwaysOn}
+//            ScrollBar.horizontal: ScrollBar {}
 
             onTextChanged: {
                 textEditorText = text;
@@ -56,6 +72,7 @@ Item {
                     lineCountModel.append({num : String(i)});
                 }
             }
+        }
         }
     }
 }
