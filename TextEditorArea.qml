@@ -26,8 +26,6 @@ Item {
                 text: num
             }
             ScrollBar.vertical: sbv
-
-//            ScrollBar.vertical: ScrollBar {policy: ScrollBar.AlwaysOn}
         }
 
         ListModel {
@@ -56,11 +54,6 @@ Item {
             Layout.fillHeight: true
 
             selectByMouse: true
-
-//            ScrollBar.vertical: ScrollBar {policy: ScrollBar.AlwaysOn}
-
-//            ScrollBar.vertical: ScrollBar {policy: ScrollBar.AlwaysOn}
-//            ScrollBar.horizontal: ScrollBar {}
 
             onTextChanged: {
                 textEditorText = text;

@@ -31,4 +31,7 @@ std::vector<W*>* part_divide(Statement* b, Statement* d);
 //Полное деление дизъюнктов
 N* divide(std::vector<Statement*>* b, Statement* d);
 
+//Базовая процедура вывода
+void inference(std::vector<Statement*>* b, Statement* d);
+
 #endif // IP_H

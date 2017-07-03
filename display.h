@@ -20,6 +20,8 @@ public:
 
     void printLine(std::string line, int depth = 0);
     void printLine(QString line, int depth = 0);
+    void printError(QString msg);
+    void printError(std::string msg);
 
 private:
     static Display* instance;

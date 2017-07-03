@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "display.h"
 
 Parser::Parser()
 {
@@ -17,6 +18,7 @@ Parser::~Parser()
 
 std::vector<Statement*>* Parser::parse()
 {
+    errorStatus = false;
     lexer->nextTok();
     std::vector<Statement*>* statements = new std::vector<Statement*>();
     Statement* s = statement();
@@ -29,11 +31,17 @@ std::vector<Statement*>* Parser::parse()
     return statements;
 }
 
+bool Parser::getErrorState() {
+    return errorStatus;
+}
+
 void Parser::error(std::string msg)
 {
+    errorStatus = true;
     errorMsg = "Parser error: " + msg + " at line " + std::to_string(lexer->line)
             + " column " + std::to_string(lexer->column);
-    std::cout << errorMsg << std::endl;
+    Display::getInstance()->printError(errorMsg);
+//    std::cout << errorMsg << std::endl;
 //    exit(1);
 }
 

@@ -93,7 +93,9 @@ ApplicationWindow {
                 id: helpButton
                 text: "Помощь"
 
-                onClicked: helpMenu.open()
+                onClicked: { //helpMenu.open()
+                    errorText.addNew("Hello")
+                }
 
                 Menu {
                     id: helpMenu
@@ -181,6 +183,21 @@ ApplicationWindow {
             }
         }
 
+        ListModel {
+            id: errorText
+            objectName: "errorModel"
+
+    //        ListElement {
+    //            i: 0
+    //            textError: "expect 123 at line 123 columnt 1231"
+    //        }
+
+            function addNew(msg) {
+                errorText.append({i : errorText.count, textError: msg})
+    //            errorText.sync()
+            }
+        }
+
         StackLayout {
             id: sLayout
 
@@ -196,7 +213,7 @@ ApplicationWindow {
             }
 
             TextEditorArea {
-                textEditorText: "Escort(Mary, z). \n # not P(g(x, y), x, y) or not P(p, f(p, q), q)."
+                textEditorText: "O(E, C).\n# Escort(Mary, z). \n # not P(g(x, y), x, y) or not P(p, f(p, q), q)."
                 objectName: "targetStatements"
             }
 
@@ -209,6 +226,39 @@ ApplicationWindow {
             }
         }
     }
+
+    ListView {
+        anchors.top: editorScreen.top
+        anchors.right: editorScreen.right
+        model: errorText
+        visible: true
+
+        width: 350
+        height: 500
+
+        delegate: Rectangle {
+                height: 40
+                width: parent.width
+                color: "#5FFF0000"
+
+                radius: 5
+
+                Text {
+                    anchors.centerIn: parent
+                    font.pointSize: 12
+                    text: textError
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+
+                    onClicked: {
+                        errorText.remove(i)
+                    }
+                }
+            }
+    }
+
 
     FileReader {
         id: fileReader

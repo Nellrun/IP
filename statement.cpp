@@ -40,12 +40,26 @@ Statement* Statement::replace(Lambda *l, int id = -1) {
     return s;
 }
 
-std::string Statement::toString() {
-    std::string out = "1 -> ";
+Statement* Statement::copy(bool inverse) {
+    Statement* s = new Statement();
 
-//    for (Predicate* p : *predicates) {
-//        out += p->toString() + " or ";
-//    }
+    for (auto p : predicates) {
+        Predicate* pn = p->copy();
+        if (inverse) {
+            pn->setNegative(!pn->isNegative());
+        }
+        s->addPredicate(pn);
+    }
+
+    return s;
+}
+
+std::string Statement::toString(bool beauty) {
+    std::string out;
+    if (beauty)
+        out = "1 -> ";
+    else
+        out = "";
 
     for (unsigned i = 0; i < predicates.size(); i++) {
         if (i != predicates.size() - 1) {
@@ -56,7 +70,8 @@ std::string Statement::toString() {
         }
     }
 
-    out += ".";
+    if (beauty)
+        out += ".";
 
     return out;
 }

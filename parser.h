@@ -22,6 +22,8 @@ public:
 
     std::string errorMsg;
 
+    bool getErrorState();
+
 private:
     Lexer* lexer;
 
@@ -32,6 +34,7 @@ private:
     Predicate* predicate();
     Statement* statement();
 
+    bool errorStatus;
 };
 
 #endif // PARSER_H

@@ -11,11 +11,12 @@ public:
 
     std::vector<Predicate*>* getPredicates();
     void addPredicate(Predicate*);
-    std::string toString();
+    std::string toString(bool beauty = true);
 
     int getSize();
 
     Statement* replace(Lambda* l, int id);
+    Statement* copy(bool inverse = false);
 
 private:
     std::vector<Predicate*> predicates;

@@ -71,13 +71,13 @@ std::vector<W*>* part_divide(Statement* b, Statement* d) {
             }
 
             if (w->q == g) {
-                Display::getInstance()->printLine(l->toString(), 1);
+                Display::getInstance()->printLine(l->toString(), 3);
                 Display::getInstance()->printLine("q = " + std::to_string(w->q) +
                                                   " b = " + w->n->toString() +
-                                                  " d = " + w->d->toString(), 1);
+                                                  " d = " + w->d->toString(), 3);
             }
             else {
-                Display::getInstance()->printLine("q = " + std::to_string(w->q), 1);
+                Display::getInstance()->printLine("q = " + std::to_string(w->q), 3);
             }
 
             res->push_back(w);
@@ -118,7 +118,8 @@ N* divide(std::vector<Statement*>* b, Statement* d) {
                 continue;
             }
 
-            Display::getInstance()->printLine(w->n->toString() + " / " + w->d->toString());
+            Display::getInstance()->printLine(QString(""));
+            Display::getInstance()->printLine(w->n->toString() + " / " + w->d->toString(), 2);
             std::vector<W*>* vWi = part_divide(w->n, w->d);
 
             for (auto wi : *vWi) {
@@ -161,4 +162,52 @@ N* divide(std::vector<Statement*>* b, Statement* d) {
     }
 
     return n;
+}
+
+
+void inference(std::vector<Statement *> *b, Statement *d) {
+    std::vector<Statement*> c;
+    c.push_back(d->copy(true));
+
+
+    std::vector<Statement*> facts;
+
+    for (Statement* s : *b) {
+        if (s->getSize() == 1) facts.push_back(s);
+    }
+
+    int i = 1;
+    std::vector<Statement*> e;
+    for (Statement* s: *b) {
+        if (s->getSize() > 1) {
+
+            Display::getInstance()->printLine("D" + std::to_string(i) + " Ω d", 1);
+
+            facts.push_back(s);
+            N* n = divide(&facts, d);
+            facts.pop_back();
+
+            if (n->q = 0) return;
+
+            std::string res = "";
+
+            for (W* w : n->w) {
+                if (w->q != 1) {
+                    e.push_back(w->n);
+                    res += "(" + w->n->toString(false) + ")";
+                }
+            }
+
+            Display::getInstance()->printLine("D" + std::to_string(i) + " Ω d = " + res + "\n", 1);
+        }
+
+        i++;
+    }
+    std::string text = "";
+
+    for (Statement* s : e) {
+        text += s->toString(false);
+    }
+
+    Display::getInstance()->printLine(text + " -> 1");
 }

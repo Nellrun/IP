@@ -1,4 +1,5 @@
 #include "lexer.h"
+#include "display.h"
 
 Lexer::Lexer()
 {
@@ -50,7 +51,10 @@ Lexer::~Lexer()
 
 void Lexer::error(std::string msg)
 {
-    std::cout << "Lexer error: " << msg << " at line " << line << " column " << column << std::endl;
+    std::string errorMsg = "Lexer error: " + msg + " at line " + std::to_string(line)
+            + " column " + std::to_string(column);
+    Display::getInstance()->printError(errorMsg);
+//    std::cout << "Lexer error: " << msg << " at line " << line << " column " << column << std::endl;
 //    exit(1);
 }
 
