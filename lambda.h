@@ -25,6 +25,8 @@ public:
     void add(Symbol* from, Symbol* to);
     std::string toString();
 
+    void extend(Lambda* l);
+
     int getSize();
 
 

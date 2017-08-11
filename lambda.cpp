@@ -46,6 +46,10 @@ std::string Lambda::toString()
 
     std::string out = "{";
 
+//    for (std::list<Replace>::iterator iter = replaceList.begin(); iter != replaceList.end(); iter++) {
+//        out += (*iter).to->toString() + "/" + (*iter).from->toString() + ",";
+//    }
+
     for (Replace elem: replaceList) {
         out += elem.to->toString() + "/"
                 + elem.from->toString() + ",";
@@ -53,4 +57,11 @@ std::string Lambda::toString()
 
     out += "}";
     return out;
+}
+
+void Lambda::extend(Lambda *l)
+{
+    for (Replace elem : l->getList()) {
+        this->add(elem.from, elem.to);
+    }
 }

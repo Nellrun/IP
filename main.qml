@@ -213,6 +213,7 @@ ApplicationWindow {
             }
 
             TextEditorArea {
+                id: textEditor2
                 textEditorText: "O(E, C).\n# Escort(Mary, z). \n # not P(g(x, y), x, y) or not P(p, f(p, q), q)."
                 objectName: "targetStatements"
             }
@@ -274,7 +275,12 @@ ApplicationWindow {
             startScreen.visible = false
             editorScreen.visible = true
             fileReader.setSource(fileUrl)
-            textEditor.textEditorText = fileReader.read()
+            if (leftMenu.index == 0) {
+                textEditor.textEditorText = fileReader.read()
+            }
+            else {
+                textEditor2.textEditorText = fileReader.read()
+            }
         }
     }
 }

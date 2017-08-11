@@ -2,14 +2,14 @@
 #include "display.h"
 
 //Функция унификации двух предикатов
-Lambda* unification(Predicate* a, Predicate* b) {
+Lambda* unification(FuncConstant* a, FuncConstant* b) {
 
     Lambda* l = new Lambda();
 
     //Проверка равенства предикатов
-    if (a->getID() != b->getID()) return l;
-    if (a->isNegative() != b->isNegative()) return l;
-    if (a->getSize() != b->getSize()) return l;
+    if (a->getID() != b->getID()) return NULL;
+    if (a->isNegative() != b->isNegative()) return NULL;
+    if (a->getSize() != b->getSize()) return NULL;
 
     for (int i = 0; i < a->getSize(); i++) {
         Symbol* ai = (*a->getSymbols())[i];
@@ -17,7 +17,7 @@ Lambda* unification(Predicate* a, Predicate* b) {
 
         //Если нет переменных и литералы не равны, то унификация невозможна
         if ((typeid(*ai) != typeid(Variable)) && (typeid(*bi) != typeid(Variable)) && (!ai->cmp(*bi))) {
-            return new Lambda();
+            return NULL;
         }
 
         if (typeid(*bi) == typeid(Variable)) {
@@ -34,13 +34,20 @@ Lambda* unification(Predicate* a, Predicate* b) {
                     l->add(ai, bi);
                 }
                 else {
-                    return new Lambda();
+                    return NULL;
                 }
             }
         }
         else {
-            l->add(ai, bi);
+            if (typeid(*ai) != typeid(FuncConstant)) {
+                Lambda* u = unification(ai, bi);
+                if (u == NULL) return NULL;
+                l->extend(u);
+            }
         }
+//        else {
+//            l->add(ai, bi);
+//        }
 
     }
 
@@ -57,7 +64,7 @@ std::vector<W*>* part_divide(Statement* b, Statement* d) {
         for (auto bP : *b->getPredicates()) {
             W* w = new W();
             Lambda* l = unification(dP, bP);
-            if (l->getSize() > 0) {
+            if (l != NULL) {
                 w->n = b->replace(l, i);
                 w->d = d->replace(l, j);
                 w->q = g;
@@ -73,8 +80,8 @@ std::vector<W*>* part_divide(Statement* b, Statement* d) {
             if (w->q == g) {
                 Display::getInstance()->printLine(l->toString(), 3);
                 Display::getInstance()->printLine("q = " + std::to_string(w->q) +
-                                                  " b = " + w->n->toString() +
-                                                  " d = " + w->d->toString(), 3);
+                                                  " b = " + w->n->toString(false) +
+                                                  " d = " + w->d->toString(false), 3);
             }
             else {
                 Display::getInstance()->printLine("q = " + std::to_string(w->q), 3);
@@ -119,7 +126,7 @@ N* divide(std::vector<Statement*>* b, Statement* d) {
             }
 
             Display::getInstance()->printLine(QString(""));
-            Display::getInstance()->printLine(w->n->toString() + " / " + w->d->toString(), 2);
+            Display::getInstance()->printLine(w->n->toString(false) + " ω " + w->d->toString(false), 2);
             std::vector<W*>* vWi = part_divide(w->n, w->d);
 
             for (auto wi : *vWi) {
