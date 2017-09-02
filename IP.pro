@@ -17,7 +17,12 @@ SOURCES += main.cpp \
     filereader.cpp \
     statement.cpp \
     symboltable.cpp \
-    display.cpp
+    display.cpp \
+    conclusion.cpp \
+    step.cpp \
+    omega.cpp \
+    wtype.cpp \
+    divisor.cpp
 
 RESOURCES += qml.qrc
 
@@ -57,4 +62,9 @@ HEADERS += \
     filereader.h \
     statement.h \
     symboltable.h \
-    display.h
+    display.h \
+    conclusion.h \
+    step.h \
+    omega.h \
+    wtype.h \
+    divisor.h

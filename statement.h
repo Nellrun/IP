@@ -9,8 +9,8 @@ class Statement
 public:
     Statement();
 
-    std::vector<Predicate*>* getPredicates();
-    void addPredicate(Predicate*);
+    std::vector<Predicate*>* getLiterals();
+    void addLiteral(Predicate*);
     std::string toString(bool beauty = true);
 
     int getSize();
@@ -19,7 +19,7 @@ public:
     Statement* copy(bool inverse = false);
 
 private:
-    std::vector<Predicate*> predicates;
+    std::vector<Predicate*> literals;
 };
 
 #endif // STATEMENT_H

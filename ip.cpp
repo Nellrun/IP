@@ -218,3 +218,18 @@ void inference(std::vector<Statement *> *b, Statement *d) {
 
     Display::getInstance()->printLine(text + " -> 1");
 }
+
+Step *conclusion(std::vector<Statement*> D, Divisor* d, int depth, Step *parent)
+{
+    if (parent == NULL) {
+        Step* root = new Step(d, 1);
+
+        //Вызов процедуры шага
+    }
+
+    if (parent->depth == depth) {
+        return;
+    }
+
+    // Вызов процедуры шага
+}

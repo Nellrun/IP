@@ -6,6 +6,8 @@
 #include "variable.h"
 #include "funcconstant.h"
 #include "statement.h"
+#include "divisor.h"
+#include "step.h"
 #include <typeinfo>
 
 #define g 2
@@ -33,5 +35,8 @@ N* divide(std::vector<Statement*>* b, Statement* d);
 
 //Базовая процедура вывода
 void inference(std::vector<Statement*>* b, Statement* d);
+
+//Процедура логического вывода, формирующая дерево шагов вывода
+Step* conclusion(std::vector<Statement*> D, Divisor* d, int depth, Step *parent = NULL);
 
 #endif // IP_H
