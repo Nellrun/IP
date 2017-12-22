@@ -209,12 +209,14 @@ ApplicationWindow {
             TextEditorArea {
                 id: textEditor
                 objectName: "knowledgeBase"
-                textEditorText: "not P(u, z, k(s)) or not P(z, s, w) or not P(u, w, k(s))."
+//                textEditorText: "not P(u, z, k(s)) or not P(z, s, w) or not P(u, w, k(s))."
+                textEditorText: "R(NIL, NIL).\nP(NIL, t, t).\nR(f(j, x), z) or not R(x, y) or not P(y, f(j,NIL),z).\nP(f(n, u), v, f(n, w)) or not P(u, v, w)."
             }
 
             TextEditorArea {
                 id: textEditor2
-                textEditorText: "O(E, C).\n# Escort(Mary, z). \n # not P(g(x, y), x, y) or not P(p, f(p, q), q)."
+//                textEditorText: "O(E, C).\n# Escort(Mary, z). \n # not P(g(x, y), x, y) or not P(p, f(p, q), q)."
+                textEditorText: "R(f(1, f(2, NIL)), s)."
                 objectName: "targetStatements"
             }
 

@@ -26,6 +26,7 @@ public:
     std::string toString();
 
     void extend(Lambda* l);
+    Lambda* copy();
 
     int getSize();
 

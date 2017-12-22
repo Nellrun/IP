@@ -20,7 +20,7 @@ public:
 
     int getSize();
 
-    void FuncConstant::replace(Symbol* from, Symbol* to);
+    void replace(Symbol* from, Symbol* to);
     bool contain(Symbol* s);
     Symbol* copy();
     ~FuncConstant();

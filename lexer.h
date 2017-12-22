@@ -16,6 +16,11 @@
 #define Lexer_EOF 7
 
 
+/*!
+    \class Lexer
+
+    \brief Класс лексического анализатора, отвечающего за распознавание лексем
+*/
 class Lexer
 {
 public:

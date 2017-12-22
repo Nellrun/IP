@@ -16,12 +16,12 @@ Parser::~Parser()
     delete lexer;
 }
 
-std::vector<Statement*>* Parser::parse()
+std::vector<StatementLambda*>* Parser::parse()
 {
     errorStatus = false;
     lexer->nextTok();
-    std::vector<Statement*>* statements = new std::vector<Statement*>();
-    Statement* s = statement();
+    std::vector<StatementLambda*>* statements = new std::vector<StatementLambda*>();
+    StatementLambda* s = statement();
     statements->push_back(s);
 
     while (lexer->sym != Lexer_EOF) {
@@ -55,7 +55,7 @@ Symbol* Parser::term()
             return (Symbol*) new FuncConstant(value, parenExpr());
         }
         else {
-            if (isupper(value[0])) {
+            if (isupper(value[0]) || isdigit(value[0])) {
                 return (Symbol*) new Constant(value);
             }
             else {
@@ -120,14 +120,16 @@ Predicate * Parser::predicate()
     }
 }
 
-Statement* Parser::statement()
+StatementLambda* Parser::statement()
 {
-    Statement* s = new Statement();
-    s->addPredicate(predicate());
+    StatementLambda* s = new StatementLambda();
+    s->l = new Lambda();
+    s->b = new Statement();
+    s->b->addLiteral(predicate());
 
     while (lexer->sym == Lexer_OR) {
         lexer->nextTok();
-        s->addPredicate(predicate());
+        s->b->addLiteral(predicate());
     }
 
     if (lexer->sym == Lexer_DOT) {

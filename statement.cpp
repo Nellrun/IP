@@ -4,17 +4,17 @@ Statement::Statement()
 {
 }
 
-void Statement::addPredicate(Predicate* p) {
-    predicates.push_back(p);
+void Statement::addLiteral(Predicate* p) {
+    literals.push_back(p);
 //    return this;
 }
 
-std::vector<Predicate*>* Statement::getPredicates() {
-    return &predicates;
+std::vector<Predicate*>* Statement::getLiterals() {
+    return &literals;
 }
 
 int Statement::getSize() {
-    return predicates.size();
+    return literals.size();
 }
 
 Statement* Statement::replace(Lambda *l, int id = -1) {
@@ -22,18 +22,18 @@ Statement* Statement::replace(Lambda *l, int id = -1) {
 
 
     int i = 0;
-    for (auto p : predicates) {
+    for (auto p : literals) {
         if (i == id) {
             i++;
             continue;
         }
-        s->addPredicate(p->copy());
+        s->addLiteral(p->copy());
         i++;
     }
 
     for (auto elem : l->getList()) {
-        for (int i = 0; i < s->predicates.size(); i++) {
-            s->predicates[i]->replace(elem.from, elem.to);
+        for (int i = 0; i < s->literals.size(); i++) {
+            s->literals[i]->replace(elem.from, elem.to);
         }
     }
 
@@ -43,12 +43,12 @@ Statement* Statement::replace(Lambda *l, int id = -1) {
 Statement* Statement::copy(bool inverse) {
     Statement* s = new Statement();
 
-    for (auto p : predicates) {
+    for (auto p : literals) {
         Predicate* pn = p->copy();
         if (inverse) {
             pn->setNegative(!pn->isNegative());
         }
-        s->addPredicate(pn);
+        s->addLiteral(pn);
     }
 
     return s;
@@ -61,12 +61,12 @@ std::string Statement::toString(bool beauty) {
     else
         out = "";
 
-    for (unsigned i = 0; i < predicates.size(); i++) {
-        if (i != predicates.size() - 1) {
-            out += predicates[i]->toString() + " or ";
+    for (unsigned i = 0; i < literals.size(); i++) {
+        if (i != literals.size() - 1) {
+            out += literals[i]->toString() + " or ";
         }
         else {
-            out += predicates[i]->toString();
+            out += literals[i]->toString();
         }
     }
 

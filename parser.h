@@ -9,6 +9,7 @@
 #include "constant.h"
 #include <vector>
 #include "statement.h"
+#include "wtype.h"
 
 
 class Parser
@@ -18,7 +19,7 @@ public:
     Parser(std::string in);
     ~Parser();
 
-    std::vector<Statement*>* parse();
+    std::vector<StatementLambda*>* parse();
 
     std::string errorMsg;
 
@@ -32,7 +33,7 @@ private:
     std::vector<Symbol*>* parenExpr();
     std::vector<Symbol*>* expr();
     Predicate* predicate();
-    Statement* statement();
+    StatementLambda* statement();
 
     bool errorStatus;
 };

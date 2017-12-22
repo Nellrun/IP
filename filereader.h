@@ -14,14 +14,14 @@ public:
 
     Q_INVOKABLE QString read();
 
-    QUrl source() { return fSource; };
+    QUrl source() { return fSource; }
 
 signals:
     void sourceChanged(const QUrl &source);
     void error(const QString &msg);
 
 public slots:
-    void setSource(const QUrl &source) {fSource = source; };
+    void setSource(const QUrl &source) {fSource = source; }
 
 private:
     QUrl fSource;

@@ -65,3 +65,16 @@ void Lambda::extend(Lambda *l)
         this->add(elem.from, elem.to);
     }
 }
+
+Lambda *Lambda::copy()
+{
+    Lambda* l = new Lambda();
+    for (auto elem: replaceList) {
+        Replace newElem;
+        newElem.from = elem.from->copy();
+        newElem.to = elem.to->copy();
+        l->replaceList.push_back(newElem);
+    }
+
+    return l;
+}

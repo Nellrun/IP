@@ -19,7 +19,7 @@ Lexer::Lexer()
                 {'~', Lexer_NOT },
                 {'|', Lexer_OR }, };
 
-    words = { { "v", Lexer_OR },
+    words = { //{ "v", Lexer_OR },
                 { "or", Lexer_OR },
                 { "not", Lexer_NOT }};
 }
@@ -40,7 +40,7 @@ Lexer::Lexer(std::string in)
     { '!', Lexer_NOT },
     { '-', Lexer_NOT } };
 
-    words = { { "v", Lexer_OR },
+    words = { //{ "v", Lexer_OR },
     { "or", Lexer_OR },
     { "not", Lexer_NOT } };
 }
@@ -98,7 +98,7 @@ void Lexer::nextTok()
             sym = symbols.find(ch)->second;
             getc();
         }
-        else if (isalpha(ch)) {
+        else if (isalpha(ch) || isdigit(ch)) {
             std::string ident = "";
 
             while (isalpha(ch) || isdigit(ch)) {

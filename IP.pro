@@ -14,7 +14,6 @@ SOURCES += main.cpp \
     symbol.cpp \
     variable.cpp \
     filereader.cpp \
-    filereader.cpp \
     statement.cpp \
     symboltable.cpp \
     display.cpp \
