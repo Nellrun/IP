@@ -27,6 +27,14 @@ Lambda* unification(FuncConstant* a, FuncConstant* b) {
         }
 
         if (typeid(*ai) == typeid(Variable)) {
+            Symbol* to = l->getReplace(ai);
+
+            // Если переменная присваивается 2 раза константе
+            if ((to != NULL) && (typeid(*(to)) != typeid(Variable)) && (typeid(*bi) != typeid(Variable)) ) {
+                delete l;
+                return NULL;
+            }
+
             if (typeid(*bi) != typeid(FuncConstant)) {
                 l->add(ai, bi);
             }
@@ -108,6 +116,13 @@ Omega* takeDivision(std::vector<StatementLambda*> facts, StatementLambda* D, Div
     // Первое частичное деление
     WType* firstDivide = part_divide(D, d);
     res->ws.push_back(firstDivide);
+
+
+    // Добавление остатков в массив (для удобства)
+    for (W* elem : firstDivide->n) {
+        res->n.push_back(elem);
+    }
+
     if (firstDivide->q != g) {
         res->q = firstDivide->q;
         return res;
@@ -126,6 +141,12 @@ Omega* takeDivision(std::vector<StatementLambda*> facts, StatementLambda* D, Div
                 elem->d->addLiteral(f, s->l);
             }
             WType* a = part_divide(elem->n, elem->d);
+
+            // Добавление остатков
+            for (W* elem : a->n) {
+                res->n.push_back(elem);
+            }
+
             if (a->q == g) {
                 vc.push(a);
             }
@@ -134,14 +155,20 @@ Omega* takeDivision(std::vector<StatementLambda*> facts, StatementLambda* D, Div
     }
 
     while (!vc.empty()) {
-        WType* elem = vc.top();
+        WType* topElem = vc.top();
         vc.pop();
 
-        for (W* elem : elem->n) {
+        for (W* elem : topElem->n) {
 
             // Выполнение второго шага полного деления
             if (elem->n->b->getSize() > 0) {
                 WType* a = part_divide(elem->n, elem->d);
+
+                // Добавление остатков
+                for (W* elem : a->n) {
+                    res->n.push_back(elem);
+                }
+
                 if (a->q == g) {
                     vc.push(a);
                 }
@@ -152,6 +179,23 @@ Omega* takeDivision(std::vector<StatementLambda*> facts, StatementLambda* D, Div
 
     return res;
 }
+
+//bool isAbsorption(StatementLambda* a, std::vector<StatementLambda*>* e) {
+//    for (StatementLambda* elem: e) {
+//        if (a->b->getSize() != elem->b->getSize()) continue;
+
+//        for (int i = 0; i < a->b->getSize(); i++) {
+//            Predicate* ai = a->b->getLiterals()[i];
+//            Predicate* bi = elem->b->getLiterals()[i];
+
+//            if (ai->getID() != bi->getID()) break;
+//            if (ai->isNegative() != bi->isNegative()) break;
+
+//        }
+//    }
+
+//    return false;
+//}
 
 Step* takeStep(std::vector<StatementLambda*> D, Divisor* d, Step* parent) {
     Step* step = new Step();
@@ -170,19 +214,29 @@ Step* takeStep(std::vector<StatementLambda*> D, Divisor* d, Step* parent) {
         if (s->b->getSize() > 1) {
             // Выполнение полного деления
             Display::getInstance()->printLine(s->b->toString() + " // " + d->toString());
-            Omega* w = takeDivision(facts, s, d);
-            step->omegas.push_back(w);
-            for (WType* elem : w->ws) {
-                for ( W* w : elem->n ) {
-                    if (w->n->b->getSize() > 0) {
-                        Display::getInstance()->printLine(w->n->b->toString() + " " + w->n->l->toString(), 1);
-                        e.push_back(w->n);
-                        step->c.push_back(w->n);
-                    }
-                    else {
-                        Display::getInstance()->printLine("0 " + w->n->l->toString(), 1);
-                    }
+            Omega* omega = takeDivision(facts, s, d);
+            step->omegas.push_back(omega);
+//            for (WType* elem : w->ws) {
+//                for ( W* w : elem->n ) {
+//                    if (w->n->b->getSize() > 0) {
+//                        Display::getInstance()->printLine(w->n->b->toString() + " " + w->n->l->toString(), 1);
+//                        e.push_back(w->n);
+//                        step->c.push_back(w->n);
+//                    }
+//                    else {
+//                        Display::getInstance()->printLine("0 " + w->n->l->toString(), 1);
+//                    }
 
+//                }
+//            }
+            for (W* w: omega->n) {
+                if (w->n->b->getSize() > 0) {
+                    Display::getInstance()->printLine(w->n->b->toString() + " " + w->n->l->toString(), 1);
+                    e.push_back(w->n);
+                    step->c.push_back(w->n);
+                }
+                else {
+                    Display::getInstance()->printLine("0 " + w->n->l->toString(), 1);
                 }
             }
         }

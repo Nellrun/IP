@@ -15,5 +15,6 @@
         <file>icons/ic_view_headline_white_24dp_2x.png</file>
         <file>icons/ic_format_indent_increase_white_24dp_1x.png</file>
         <file>icons/ic_format_indent_increase_white_24dp_2x.png</file>
+        <file>Tree.qml</file>
     </qresource>
 </RCC>

@@ -24,6 +24,7 @@ public:
     std::list<Replace> getList();
     void add(Symbol* from, Symbol* to);
     std::string toString();
+    Symbol* getReplace(Symbol* s);
 
     void extend(Lambda* l);
     Lambda* copy();

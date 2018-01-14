@@ -21,7 +21,9 @@ SOURCES += main.cpp \
     step.cpp \
     omega.cpp \
     wtype.cpp \
-    divisor.cpp
+    divisor.cpp \
+    treeitem.cpp \
+    treemodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -66,4 +68,6 @@ HEADERS += \
     step.h \
     omega.h \
     wtype.h \
-    divisor.h
+    divisor.h \
+    treeitem.h \
+    treemodel.h

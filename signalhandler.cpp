@@ -52,5 +52,6 @@ void SignalHandler::onRunButtonClick() {
 
 //    divide(disj, (*target)[0]);
 //    inference(disj, (*target)[0]);
-    conclusion(*disj, new Divisor((*target)[0]->b), 5, NULL);
+    Step* root = conclusion(*disj, new Divisor((*target)[0]->b), 2, NULL);
+
 }

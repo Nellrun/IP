@@ -38,7 +38,7 @@ public:
         \property Omega::n
         \brief Остатки операции полного деления дизъюнктов
      */
-//    std::vector<N*> n;
+    std::vector<W*> n;
 
     /*!
         \property Omega::r

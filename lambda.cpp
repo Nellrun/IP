@@ -59,6 +59,16 @@ std::string Lambda::toString()
     return out;
 }
 
+Symbol* Lambda::getReplace(Symbol *s)
+{
+
+    for (Replace r: replaceList) {
+        if (r.from->getID() == s->getID()) return r.to;
+    }
+
+    return NULL;
+}
+
 void Lambda::extend(Lambda *l)
 {
     for (Replace elem : l->getList()) {
