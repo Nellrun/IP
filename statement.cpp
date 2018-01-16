@@ -33,7 +33,7 @@ Statement* Statement::replace(Lambda *l, int id = -1) {
 
     for (auto elem : l->getList()) {
         for (int i = 0; i < s->literals.size(); i++) {
-            s->literals[i]->replace(elem.from, elem.to);
+            s->literals[i]->replace(elem->from, elem->to);
         }
     }
 

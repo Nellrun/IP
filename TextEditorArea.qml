@@ -5,7 +5,10 @@ import QtQuick.Layouts 1.0
 
 Item {
 
+    id: root
+
     property string textEditorText: ""
+    signal enterPressed()
 
     RowLayout {
         spacing: 10
@@ -64,7 +67,9 @@ Item {
                 for (var i = 1; i <= textEditor.lineCount; i++) {
                     lineCountModel.append({num : String(i)});
                 }
+                //root.enterPressed()
             }
+
         }
         }
     }

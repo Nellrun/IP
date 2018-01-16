@@ -1,5 +1,6 @@
 #include "parser.h"
 #include "display.h"
+#include <thread>
 
 Parser::Parser()
 {
@@ -41,6 +42,12 @@ void Parser::error(std::string msg)
     errorMsg = "Parser error: " + msg + " at line " + std::to_string(lexer->line)
             + " column " + std::to_string(lexer->column);
     Display::getInstance()->printError(errorMsg);
+
+    throw ParserAnalysisException();
+//    std::terminate();
+//    std::this_thread::yield();
+//    abort();
+//    ExitThread(0);
 //    std::cout << errorMsg << std::endl;
 //    exit(1);
 }

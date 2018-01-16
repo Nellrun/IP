@@ -3,6 +3,7 @@
 
 #include "symbol.h"
 #include "funcconstant.h"
+#include "variable.h"
 #include <list>
 #include <string>
 #include <typeinfo>
@@ -21,7 +22,7 @@ public:
     Lambda();
     ~Lambda();
 
-    std::list<Replace> getList();
+    std::list<Replace*> getList();
     void add(Symbol* from, Symbol* to);
     std::string toString();
     Symbol* getReplace(Symbol* s);
@@ -33,7 +34,7 @@ public:
 
 
 private:
-    std::list<Replace> replaceList;
+    std::list<Replace*> replaceList;
 };
 
 #endif // LAMBDA_H

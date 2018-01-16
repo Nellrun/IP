@@ -8,7 +8,7 @@ Lambda::~Lambda()
 {
 }
 
-std::list<Replace> Lambda::getList()
+std::list<Replace*> Lambda::getList()
 {
     return replaceList;
 }
@@ -22,14 +22,36 @@ void Lambda::add(Symbol* from, Symbol* to)
     //bool a = typeid(*from) == typeid(*to);
     //bool b = typeid(*from) == typeid(Variable);
 
-    Replace r;
-    r.from = from->copy();
-    r.to = to->copy();
+    Replace* r = new Replace();
+    r->from = from->copy();
+    r->to = to->copy();
+
+    if (typeid(*to) == typeid(Variable)) {
+        Symbol* a = to;
+        while ( (a != NULL) && (typeid(*a) == typeid(Variable)) ) {
+            r->to = a;
+            a = this->getReplace(a);
+        }
+
+        if (a != NULL) {
+            r->to = a->copy();
+        }
+        else {
+            r->to = r->to->copy();
+        }
+    }
+
+    for (Replace* i : replaceList) {
+        if (i->to->getID() == r->from->getID()) {
+            i->to = r->to->copy();
+        }
+    }
+
     replaceList.push_back(r);
 
-    for (Replace elem: replaceList) {
-        if (typeid(*(elem.to)) == typeid(FuncConstant)) {
-            ((FuncConstant*) elem.to)->replace(r.from, r.to);
+    for (Replace* elem: replaceList) {
+        if (typeid(*(elem->to)) == typeid(FuncConstant)) {
+            ((FuncConstant*) elem->to)->replace(r->from, r->to);
         }
     }
 
@@ -50,9 +72,9 @@ std::string Lambda::toString()
 //        out += (*iter).to->toString() + "/" + (*iter).from->toString() + ",";
 //    }
 
-    for (Replace elem: replaceList) {
-        out += elem.to->toString() + "/"
-                + elem.from->toString() + ",";
+    for (Replace* elem: replaceList) {
+        out += elem->to->toString() + "/"
+                + elem->from->toString() + ",";
     }
 
     out += "}";
@@ -62,8 +84,8 @@ std::string Lambda::toString()
 Symbol* Lambda::getReplace(Symbol *s)
 {
 
-    for (Replace r: replaceList) {
-        if (r.from->getID() == s->getID()) return r.to;
+    for (Replace* r: replaceList) {
+        if (r->from->getID() == s->getID()) return r->to;
     }
 
     return NULL;
@@ -71,8 +93,8 @@ Symbol* Lambda::getReplace(Symbol *s)
 
 void Lambda::extend(Lambda *l)
 {
-    for (Replace elem : l->getList()) {
-        this->add(elem.from, elem.to);
+    for (Replace* elem : l->getList()) {
+        this->add(elem->from, elem->to);
     }
 }
 
@@ -80,9 +102,9 @@ Lambda *Lambda::copy()
 {
     Lambda* l = new Lambda();
     for (auto elem: replaceList) {
-        Replace newElem;
-        newElem.from = elem.from->copy();
-        newElem.to = elem.to->copy();
+        Replace* newElem = new Replace();
+        newElem->from = elem->from->copy();
+        newElem->to = elem->to->copy();
         l->replaceList.push_back(newElem);
     }
 

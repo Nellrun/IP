@@ -12,6 +12,8 @@
 #include "wtype.h"
 
 
+class ParserAnalysisException {};
+
 class Parser
 {
 public:

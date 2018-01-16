@@ -13,6 +13,9 @@ signals:
 
 public slots:
     void onRunButtonClick();
+
+//private:
+//    void threadFunc();
 };
 
 #endif // SIGNALHANDLER_H

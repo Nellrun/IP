@@ -9,49 +9,62 @@ SignalHandler::SignalHandler(QObject *parent) : QObject(parent)
 
 }
 
+
 void SignalHandler::onRunButtonClick() {
 
-//    Получение исходных данных
-    QObject* input = parent()->findChild<QObject*>("knowledgeBase");
-    QObject* input2 = parent()->findChild<QObject*>("targetStatements");
-    QObject* output = parent()->findChild<QObject*>("outputTextEditor");
+    //    Получение исходных данных
+        QObject* input = parent()->findChild<QObject*>("knowledgeBase");
+        QObject* input2 = parent()->findChild<QObject*>("targetStatements");
+        QObject* output = parent()->findChild<QObject*>("outputTextEditor");
 
-    QObject* list = parent()->findChild<QObject*>("errorModel");
-//    QVariant ret;
-    QMetaObject::invokeMethod(list, "clear");
+        QObject* list = parent()->findChild<QObject*>("errorModel");
+    //    QVariant ret;
+        QMetaObject::invokeMethod(list, "clear");
 
-    QString text = input->property("textEditorText").toString();
-    QString targetStatemens = input2->property("textEditorText").toString();
+        QString text = input->property("textEditorText").toString();
+        QString targetStatemens = input2->property("textEditorText").toString();
 
-    Parser p(text.toStdString());
-    std::vector<StatementLambda*>* disj = p.parse();
+        Parser p(text.toStdString());
+        std::vector<StatementLambda*>* disj;
+        try {
+            disj = p.parse();
+        }
+        catch (ParserAnalysisException e) {
+            return;
+        }
 
-    if (p.getErrorState()) return;
+        if (p.getErrorState()) return;
 
-    Parser p2(targetStatemens.toStdString());
-    std::vector<StatementLambda*>* target = p2.parse();
+        Parser p2(targetStatemens.toStdString());
+        std::vector<StatementLambda*>* target;
+        try {
+             target = p2.parse();
+        }
+        catch (ParserAnalysisException e) {
+            return;
+        }
 
-    if (p2.getErrorState()) return;
+        if (p2.getErrorState()) return;
 
-    QString out = "";
+        QString out = "";
 
 
-    for (StatementLambda* stat : *disj) {
-        out += QString::fromStdString(stat->b->toString()) + '\n';
-    }
+        for (StatementLambda* stat : *disj) {
+            out += QString::fromStdString(stat->b->toString()) + '\n';
+        }
 
-    out += "----------------------------\n";
+        out += "----------------------------\n";
 
-    for (StatementLambda* stat : *target) {
-        out += QString::fromStdString(stat->b->toString()) + '\n' + '\n';
-    }
+        for (StatementLambda* stat : *target) {
+            out += QString::fromStdString(stat->b->toString()) + '\n' + '\n';
+        }
 
-    output->setProperty("textEditorText", out);
+        output->setProperty("textEditorText", out);
 
-//    part_divide((*disj)[0], (*target)[0]);
+    //    part_divide((*disj)[0], (*target)[0]);
 
-//    divide(disj, (*target)[0]);
-//    inference(disj, (*target)[0]);
-    Step* root = conclusion(*disj, new Divisor((*target)[0]->b), 2, NULL);
+    //    divide(disj, (*target)[0]);
+    //    inference(disj, (*target)[0]);
+        Step* root = conclusion(*disj, new Divisor((*target)[0]->b), 2, NULL);
 
 }

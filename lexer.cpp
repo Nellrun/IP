@@ -94,6 +94,30 @@ void Lexer::nextTok()
                 getc();
             }
         }
+//        else if (ch == '1') {
+//            getc();
+//            while (isspace(ch)) getc();
+//            if (ch == '-') {
+//                getc();
+//                if (ch == '>') {
+//                    getc();
+//                }
+//                else {
+//                    std::string msg = "unexpected symbol \"";
+//                    msg += ch;
+//                    msg += "\"";
+//                    error(msg);
+//                    return;
+//                }
+//            }
+//            else {
+//                std::string msg = "unexpected symbol \"";
+//                msg += ch;
+//                msg += "\"";
+//                error(msg);
+//                return;
+//            }
+//        }
         else if (symbols.find(ch) != symbols.end()) {
             sym = symbols.find(ch)->second;
             getc();

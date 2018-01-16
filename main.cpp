@@ -9,7 +9,7 @@
 int main(int argc, char *argv[])
 {
     qmlRegisterType<FileReader, 1>("FileReader", 1, 0, "FileReader");
-    qmlRegisterType<TreeModel, 1>("TreeModel", 1, 0, "TreeModel");
+//    qmlRegisterType<TreeModel, 1>("TreeModel", 1, 0, "TreeModel");
 
     QQmlDebuggingEnabler enabler;
 

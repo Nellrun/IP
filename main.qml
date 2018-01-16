@@ -211,6 +211,9 @@ ApplicationWindow {
                 objectName: "knowledgeBase"
 //                textEditorText: "not P(u, z, k(s)) or not P(z, s, w) or not P(u, w, k(s))."
                 textEditorText: "R(NIL, NIL).\nP(NIL, t, t).\nR(f(j, x), z) or not R(x, y) or not P(y, f(j,NIL),z).\nP(f(n, u), v, f(n, w)) or not P(u, v, w)."
+                onEnterPressed: {
+                    textEditorText += "\n 1 -> "
+                }
             }
 
             TextEditorArea {
@@ -237,6 +240,7 @@ ApplicationWindow {
     ListView {
         anchors.top: editorScreen.top
         anchors.right: editorScreen.right
+
         model: errorText
         visible: true
 
@@ -247,7 +251,6 @@ ApplicationWindow {
                 height: 40
                 width: parent.width
                 color: "#5FFF0000"
-
                 radius: 5
 
                 Text {
@@ -260,7 +263,7 @@ ApplicationWindow {
                     anchors.fill: parent
 
                     onClicked: {
-                        errorText.remove(i)
+                        errorText.remove(0)
                     }
                 }
             }
