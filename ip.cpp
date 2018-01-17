@@ -76,7 +76,7 @@ WType* part_divide(StatementLambda* b, Divisor* d) {
         int i = 0;
         for (auto bP : *b->b->getLiterals()) {
             W* w = new W();
-            Lambda* l = unification((FuncConstant*) dP, (FuncConstant*) bP);
+            Lambda* l = unification((FuncConstant*) dP->literal, (FuncConstant*) bP);
             if (l != NULL) {
                 w->n = new StatementLambda();
                 w->n->b = b->b->replace(l, i);
@@ -90,7 +90,7 @@ WType* part_divide(StatementLambda* b, Divisor* d) {
 
                 if (w->n->b->getSize() == 0) {
                     Lambda* lc = w->n->l->copy();
-                    lc->extend(&dP->lambda);
+                    lc->extend(dP->lambda);
                     res->r.push_back(lc);
                 }
 
@@ -112,6 +112,7 @@ WType* part_divide(StatementLambda* b, Divisor* d) {
 Omega* takeDivision(std::vector<StatementLambda*> facts, StatementLambda* D, Divisor* d) {
     Omega* res = new Omega();
     res->D = *D;
+    res->q = 1;
 
     // Первое частичное деление
     WType* firstDivide = part_divide(D, d);
@@ -199,12 +200,19 @@ Omega* takeDivision(std::vector<StatementLambda*> facts, StatementLambda* D, Div
 
 Step* takeStep(std::vector<StatementLambda*> D, Divisor* d, Step* parent) {
     Step* step = new Step();
-    if (parent != NULL)
+    if (parent != NULL) {
         step->depth = parent->depth + 1;
+        step->c = parent->c;
+    }
+
+//    for (StatementLambda* sl : d->getLiterals()) {
+//        step->c.push_back(sl);
+//    }
 
     std::vector<StatementLambda*> facts;
 
     for (StatementLambda* s : D) {
+        s->b->setLevel(step->depth);
         if (s->b->getSize() == 1) facts.push_back(s);
     }
 

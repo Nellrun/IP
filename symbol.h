@@ -7,12 +7,15 @@
 class Symbol
 {
 public:
-    Symbol() {};
+    Symbol() {}
     Symbol(std::string name);
     ~Symbol();
 
     virtual int getID();
     virtual void setID(int id);
+    virtual int getLevel();
+    virtual void setLevel(int lvl);
+    virtual int getIndex();
     virtual std::string toString();
     virtual bool cmp(Symbol b);
     virtual bool isTerm();
@@ -20,6 +23,8 @@ public:
 
 protected:
     int id;
+    int level = 0;
+    int index = 1;
 };
 
 #endif // SYMBOL_H

@@ -2,10 +2,25 @@
 
 Symbol::Symbol(std::string name) {
     this->id = SymbolTable::getInstance()->addSymbol(name);
+    this->level = 0;
+    this->index = 1;
 }
 
 int Symbol::getID() {
     return this->id;
+}
+
+int Symbol::getLevel() {
+    return this->level;
+}
+
+void Symbol::setLevel(int lvl)
+{
+    this->level = lvl;
+}
+
+int Symbol::getIndex() {
+    return this->index;
 }
 
 void Symbol::setID(int id) {
@@ -14,11 +29,14 @@ void Symbol::setID(int id) {
 
 std::string Symbol::toString()
 {
+    if (level > 0) {
+        return SymbolTable::getInstance()->getSymbol(id) + "." + std::to_string(level) + std::to_string(index);
+    }
     return SymbolTable::getInstance()->getSymbol(id);
 }
 
 bool Symbol::cmp(Symbol b) {
-    return b.getID() == this->id;
+    return ((b.getID() == this->id) && (b.getLevel() == this->level) && (b.getIndex() == this->index));
 }
 
 bool Symbol::isTerm()

@@ -56,8 +56,8 @@ Predicate* Predicate::addSymbol(Symbol* s) {
 
 Predicate* Predicate::copy()
 {
-    Predicate* p = new Predicate();
-    *p = *this;
+    Predicate* p = new Predicate(*this);
+//    *p = *this;
 
     for (unsigned i = 0; i < symbols.size(); i++) {
         symbols[i] = symbols[i]->copy();

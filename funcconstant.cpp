@@ -3,11 +3,14 @@
 #include <typeinfo>
 
 FuncConstant::FuncConstant() {
-
+    this->level = 0;
+    this->index = 1;
 }
 
 FuncConstant::FuncConstant(std::string name) {
    id = SymbolTable::getInstance()->addSymbol(name);
+   this->level = 0;
+   this->index = 1;
 }
 
 FuncConstant::FuncConstant(std::string name, std::vector<Symbol*> *symbols) {
@@ -29,6 +32,18 @@ std::string FuncConstant::toString() {
 FuncConstant* FuncConstant::addSymbol(Symbol* s) {
     symbols.push_back(s);
     return this;
+}
+
+void FuncConstant::setLevel(int lvl)
+{
+    for (auto elem: symbols) {
+        if (typeid(*elem) == typeid(FuncConstant)) {
+            ((FuncConstant*) (elem))->setLevel(lvl);
+        }
+        if (typeid(*elem) == typeid(Variable)) {
+            elem->setLevel(lvl);
+        }
+    }
 }
 
 std::vector<Symbol*>* FuncConstant::getSymbols()

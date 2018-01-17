@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "symbol.h"
+#include "variable.h"
 
 class FuncConstant: public Symbol
 {
@@ -17,6 +18,7 @@ public:
     std::vector<Symbol*>* getSymbols();
     void setSymbols(std::vector<Symbol*>* s);
     FuncConstant* addSymbol(Symbol* s);
+    void setLevel(int lvl);
 
     int getSize();
 

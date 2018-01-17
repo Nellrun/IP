@@ -54,6 +54,13 @@ Statement* Statement::copy(bool inverse) {
     return s;
 }
 
+void Statement::setLevel(int lvl)
+{
+    for (auto p: literals) {
+        p->setLevel(lvl);
+    }
+}
+
 std::string Statement::toString(bool beauty) {
     std::string out;
     if (beauty)

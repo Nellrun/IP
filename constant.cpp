@@ -2,6 +2,8 @@
 
 Constant::Constant(std::string name) {
     id = SymbolTable::getInstance()->addSymbol(name);
+    this->level = 0;
+    this->index = 1;
 }
 
 Constant::Constant(std::string name, std::string value) {

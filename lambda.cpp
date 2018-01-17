@@ -85,7 +85,7 @@ Symbol* Lambda::getReplace(Symbol *s)
 {
 
     for (Replace* r: replaceList) {
-        if (r->from->getID() == s->getID()) return r->to;
+        if (r->from->cmp(*s)) return r->to;
     }
 
     return NULL;

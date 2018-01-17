@@ -17,6 +17,7 @@ public:
 
     Statement* replace(Lambda* l, int id);
     Statement* copy(bool inverse = false);
+    void setLevel(int lvl);
 
 private:
     std::vector<Predicate*> literals;

@@ -8,8 +8,8 @@ Divisor::Divisor()
 Divisor::Divisor(Statement *s) {
     for (Predicate* p: *s->getLiterals()) {
         d* elem = new d();
-        elem->lambda = Lambda();
-        elem->literal = *p->copy();
+        elem->lambda = new Lambda();
+        elem->literal = p->copy();
         literals.push_back(elem);
     }
 }
@@ -17,8 +17,8 @@ Divisor::Divisor(Statement *s) {
 void Divisor::addLiteral(Predicate *p, Lambda *l)
 {
     d* newElem = new d();
-    newElem->literal = *p->copy();
-    newElem->lambda = *l->copy();
+    newElem->literal = p->copy();
+    newElem->lambda = l->copy();
     literals.push_back(newElem);
 }
 
@@ -28,8 +28,8 @@ Divisor *Divisor::copy()
 
     for (d* elem: literals) {
         d* newElem = new d();
-        newElem->literal = *elem->literal.copy();
-        newElem->lambda = *elem->lambda.copy();
+        newElem->literal = elem->literal->copy();
+        newElem->lambda = elem->lambda->copy();
 
         divisor->literals.push_back(newElem);
     }
@@ -47,10 +47,10 @@ std::string Divisor::toString(bool beauty)
 
     for (unsigned i = 0; i < literals.size(); i++) {
         if (i != literals.size() - 1) {
-            out += literals[i]->literal.toString() + " or ";
+            out += literals[i]->literal->toString() + " or ";
         }
         else {
-            out += literals[i]->literal.toString();
+            out += literals[i]->literal->toString();
         }
     }
 
@@ -71,13 +71,14 @@ Divisor* Divisor::replace(Lambda* l, int k) {
         }
 
         d* newElem = new d();
-        newElem->literal = *elem->literal.copy();
+        newElem->lambda = new Lambda();
+        newElem->literal = elem->literal->copy();
 
         for (auto elem : l->getList()) {
-                newElem->literal.replace(elem->from, elem->to);
+                newElem->literal->replace(elem->from, elem->to);
         }
 
-        newElem->lambda.extend(l);
+        newElem->lambda->extend(l);
 
         divisor->literals.push_back(newElem);
     }

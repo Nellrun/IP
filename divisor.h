@@ -6,8 +6,8 @@
 #include <vector>
 
 struct d {
-    Predicate literal;
-    Lambda lambda;
+    Predicate* literal;
+    Lambda* lambda;
 };
 
 class Divisor
