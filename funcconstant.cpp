@@ -34,16 +34,33 @@ FuncConstant* FuncConstant::addSymbol(Symbol* s) {
     return this;
 }
 
-void FuncConstant::setLevel(int lvl)
+void FuncConstant::setLevel(int lvl, int ind)
 {
     for (auto elem: symbols) {
         if (typeid(*elem) == typeid(FuncConstant)) {
-            ((FuncConstant*) (elem))->setLevel(lvl);
+            ((FuncConstant*) (elem))->setLevel(lvl, ind);
         }
         if (typeid(*elem) == typeid(Variable)) {
             elem->setLevel(lvl);
+            elem->setIndex(ind);
         }
     }
+}
+
+bool FuncConstant::isEqual(FuncConstant *b)
+{
+    if (!this->cmp(*b)) return false;
+    if (symbols.size() != b->getSize()) return false;
+    for (int i = 0; i < symbols.size(); i++) {
+        symbols[i]->cmp(*(*b->getSymbols())[i]);
+//        if (!symbols[i]->cmp((*(b->getSymbols())[i]))) return false;
+//        if (symbols[i]->getID() != b->getSymbols()[i]->getID()) return false;
+        if (typeid(*symbols[i]) == typeid(FuncConstant)) {
+            if (! ((FuncConstant*) symbols[i])->isEqual((FuncConstant *) (*b->getSymbols())[i])) return false;
+        }
+    }
+
+    return true;
 }
 
 std::vector<Symbol*>* FuncConstant::getSymbols()

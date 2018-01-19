@@ -38,8 +38,11 @@ N* divide(std::vector<Statement*>* b, Statement* d);
 void inference(std::vector<Statement*>* b, Statement* d);
 
 //Процедура логического вывода, формирующая дерево шагов вывода
-Step* conclusion(std::vector<StatementLambda*> D, Divisor* d, int depth, Step *parent = NULL);
+Step* conclusion(std::vector<StatementLambda*> D, Divisor* d, int depth, Step *parent = NULL,  int ind = 1);
 
-Step* takeStep(std::vector<StatementLambda*> D, Divisor* d, Step* parent);
+Step* takeStep(std::vector<StatementLambda*> D, Divisor* d, Step* parent, int ind);
+
+// Согласование
+std::vector<Lambda*>* reconciliation(Step* root);
 
 #endif // IP_H

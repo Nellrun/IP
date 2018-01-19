@@ -16,6 +16,7 @@ public:
     virtual int getLevel();
     virtual void setLevel(int lvl);
     virtual int getIndex();
+    virtual int setIndex(int ind);
     virtual std::string toString();
     virtual bool cmp(Symbol b);
     virtual bool isTerm();

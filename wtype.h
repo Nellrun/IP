@@ -4,12 +4,7 @@
 #include "lambda.h"
 #include "statement.h"
 #include "divisor.h"
-
-struct StatementLambda
-{
-    Statement* b;
-    Lambda* l;
-};
+#include "statementlambda.h"
 
 struct W
 {

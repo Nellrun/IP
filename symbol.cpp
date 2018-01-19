@@ -23,13 +23,18 @@ int Symbol::getIndex() {
     return this->index;
 }
 
+int Symbol::setIndex(int ind)
+{
+    this->index = ind;
+}
+
 void Symbol::setID(int id) {
     this->id = id;
 }
 
 std::string Symbol::toString()
 {
-    if (level > 0) {
+    if (level > 1) {
         return SymbolTable::getInstance()->getSymbol(id) + "." + std::to_string(level) + std::to_string(index);
     }
     return SymbolTable::getInstance()->getSymbol(id);

@@ -2,6 +2,7 @@
 #include "parser.h"
 #include <QString>
 #include <QVariant>
+#include "display.h"
 #include "ip.h"
 
 SignalHandler::SignalHandler(QObject *parent) : QObject(parent)
@@ -66,5 +67,17 @@ void SignalHandler::onRunButtonClick() {
     //    divide(disj, (*target)[0]);
     //    inference(disj, (*target)[0]);
         Step* root = conclusion(*disj, new Divisor((*target)[0]->b), 2, NULL);
+
+//        out += "Результирующие подстановки: \n";
+//        output->setProperty("textEditorText", out);
+
+        std::vector<Lambda*>* res = reconciliation(root);
+
+        Display::getInstance()->printLine(QString(""));
+        Display::getInstance()->printLine(QString("Результирующие подстановки:"));
+
+        for (Lambda* l : *res) {
+            Display::getInstance()->printLine(l->toString(), 0);
+        }
 
 }

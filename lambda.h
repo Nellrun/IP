@@ -22,7 +22,7 @@ public:
     Lambda();
     ~Lambda();
 
-    std::list<Replace*> getList();
+    std::vector<Replace*> getList();
     void add(Symbol* from, Symbol* to);
     std::string toString();
     Symbol* getReplace(Symbol* s);
@@ -34,7 +34,7 @@ public:
 
 
 private:
-    std::list<Replace*> replaceList;
+    std::vector<Replace*> replaceList;
 };
 
 #endif // LAMBDA_H

@@ -66,6 +66,8 @@ public:
         \brief Описывает глубину шага
      */
     int depth;
+
+    int ind;
 };
 
 #endif // STEP_H

@@ -15,9 +15,10 @@ public:
 
     int getSize();
 
+    bool isEqual(Statement* b);
     Statement* replace(Lambda* l, int id);
     Statement* copy(bool inverse = false);
-    void setLevel(int lvl);
+    void setLevel(int lvl, int ind);
 
 private:
     std::vector<Predicate*> literals;

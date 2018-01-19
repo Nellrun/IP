@@ -8,7 +8,7 @@ Lambda::~Lambda()
 {
 }
 
-std::list<Replace*> Lambda::getList()
+std::vector<Replace*> Lambda::getList()
 {
     return replaceList;
 }

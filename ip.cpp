@@ -1,5 +1,6 @@
 #include "ip.h"
 #include "display.h"
+#include "constant.h"
 #include <stack>
 
 //Функция унификации двух предикатов
@@ -151,6 +152,14 @@ Omega* takeDivision(std::vector<StatementLambda*> facts, StatementLambda* D, Div
             if (a->q == g) {
                 vc.push(a);
             }
+
+            if (a->q == 0) {
+                res->q = 0;
+
+                for (Lambda* rl : a->r) {
+                    res->r.push_back(rl);
+                }
+            }
             res->ws.push_back(a);
         }
     }
@@ -168,6 +177,14 @@ Omega* takeDivision(std::vector<StatementLambda*> facts, StatementLambda* D, Div
                 // Добавление остатков
                 for (W* elem : a->n) {
                     res->n.push_back(elem);
+                }
+
+                if (a->q == 0) {
+                    res->q = 0;
+
+                    for (Lambda* rl : a->r) {
+                        res->r.push_back(rl);
+                    }
                 }
 
                 if (a->q == g) {
@@ -198,21 +215,25 @@ Omega* takeDivision(std::vector<StatementLambda*> facts, StatementLambda* D, Div
 //    return false;
 //}
 
-Step* takeStep(std::vector<StatementLambda*> D, Divisor* d, Step* parent) {
+Step* takeStep(std::vector<StatementLambda*> D, Divisor* divisor, Step* parent, int ind) {
     Step* step = new Step();
+    step->q = 1;
     if (parent != NULL) {
         step->depth = parent->depth + 1;
         step->c = parent->c;
     }
+    else {
+        step->depth = 1;
+    }
 
-//    for (StatementLambda* sl : d->getLiterals()) {
-//        step->c.push_back(sl);
-//    }
+    for (d* div: *(divisor->getLiterals())) {
+        step->c.push_back(new StatementLambda(div));
+    }
 
     std::vector<StatementLambda*> facts;
 
     for (StatementLambda* s : D) {
-        s->b->setLevel(step->depth);
+        s->b->setLevel(step->depth, ind);
         if (s->b->getSize() == 1) facts.push_back(s);
     }
 
@@ -221,25 +242,27 @@ Step* takeStep(std::vector<StatementLambda*> D, Divisor* d, Step* parent) {
     for (StatementLambda* s: D) {
         if (s->b->getSize() > 1) {
             // Выполнение полного деления
-            Display::getInstance()->printLine(s->b->toString() + " // " + d->toString());
-            Omega* omega = takeDivision(facts, s, d);
+            Display::getInstance()->printLine(s->b->toString() + " // " + divisor->toString());
+            Omega* omega = takeDivision(facts, s, divisor);
+            if (omega->q == 0) {
+                step->q = 0;
+            }
             step->omegas.push_back(omega);
-//            for (WType* elem : w->ws) {
-//                for ( W* w : elem->n ) {
-//                    if (w->n->b->getSize() > 0) {
-//                        Display::getInstance()->printLine(w->n->b->toString() + " " + w->n->l->toString(), 1);
-//                        e.push_back(w->n);
-//                        step->c.push_back(w->n);
-//                    }
-//                    else {
-//                        Display::getInstance()->printLine("0 " + w->n->l->toString(), 1);
-//                    }
-
-//                }
-//            }
             for (W* w: omega->n) {
                 if (w->n->b->getSize() > 0) {
                     Display::getInstance()->printLine(w->n->b->toString() + " " + w->n->l->toString(), 1);
+
+                    bool eq = false;
+
+                    for (StatementLambda* c_elem: step->c) {
+                        if (c_elem->b->isEqual(w->n->b)) {
+                            eq = true;
+                            break;
+                        }
+                    }
+
+                    if (eq) continue;
+
                     e.push_back(w->n);
                     step->c.push_back(w->n);
                 }
@@ -272,7 +295,7 @@ Step* takeStep(std::vector<StatementLambda*> D, Divisor* d, Step* parent) {
     }
 
     // фиксирование результатов
-    step->d = d;
+    step->d = divisor;
     step->m = divisors;
     step->p = 0;
 
@@ -283,31 +306,150 @@ Step* takeStep(std::vector<StatementLambda*> D, Divisor* d, Step* parent) {
     return step;
 }
 
-Step *conclusion(std::vector<StatementLambda*> D, Divisor* d, int depth, Step *parent)
+Step *conclusion(std::vector<StatementLambda*> D, Divisor* d, int depth, Step *parent, int ind)
 {
     Step* root = NULL;
     if (parent == NULL) {
         //Вызов процедуры шага
-        root = takeStep(D, d, NULL);
+        root = takeStep(D, d, NULL, 1);
         root->depth = 1;
+        root->ind = ind;
     }
     else {
         if (parent->depth == depth) {
             return NULL;
         }
-        root = takeStep(D, d, parent);
+        root = takeStep(D, d, parent, ind);
     }
 
     if (root == NULL) return NULL;
 
+    int i = 1;
     for (Divisor* di : root->m) {
-        Step* si = conclusion(D, di, depth, root);
+        if (di->getLiterals()->size() < 1) continue;
+
+        Step* si = conclusion(D, di, depth, root, i);
         if (si != NULL)
             root->sons.push_back(si);
-        si = conclusion(root->c, di, depth, root);
+        si = conclusion(root->c, di, depth, root, i);
         if (si != NULL)
             root->sons.push_back(si);
+
+        i++;
     }
 
     return root;
+}
+
+
+std::vector<Lambda*>* reconciliation(Step* root) {
+    std::vector<Lambda*>* v = new std::vector<Lambda*>();
+
+
+    // Корневое решение не надо согласовывать
+    if (root->q == 0) {
+        for (Omega* o: root->omegas) {
+            if (o->q == 0) {
+                for (Lambda* lr : o->r) {
+                    v->push_back(lr);
+                }
+            }
+        }
+    }
+
+    std::vector<Step*> sons = root->sons;
+
+
+    std::vector<Lambda*> notRecon;
+    notRecon.push_back(new Lambda());
+
+    // Находим всех потомков и формируем множество не согласованных подстановок
+    for (Step* son : sons) {
+        for (Step* stepSon: son->sons) {
+            sons.push_back(stepSon);
+        }
+
+        if (son->q == 0) {
+            for (Omega* o : son->omegas) {
+                if (o->q == 0) {
+
+                    // Произведение множеств
+                    int recSize = notRecon.size();
+                    for (int j = 0; j < recSize; j++) {
+                        for (int i = 0; i < o->r.size() - 1; i++) {
+                            notRecon.push_back(notRecon[j]->copy());
+                        }
+                    }
+
+                    for (int i = 0; i < notRecon.size(); i++) {
+                        notRecon[i]->extend(o->r[i / recSize]);
+                    }
+                }
+            }
+        }
+    }
+
+    // Согласование
+
+    for (Lambda* l : notRecon) {
+        bool isNotRecon = false;
+
+        for (int i = 0; i < l->getSize(); i++) {
+
+            // Находим одинаковые переменные
+            std::vector<Replace*> replaces = l->getList();
+            Symbol* from = replaces[i]->from;
+            std::vector<Symbol*> unificationList;
+            unificationList.push_back(replaces[i]->to);
+            for (int j = l->getSize() - 1; j > i; j--) {
+                Symbol* to = replaces[j]->from;
+                if ( (from->getID() == to->getID()) &&
+                     (from->getLevel() == to->getLevel()) &&
+                     (from->getIndex() == to->getIndex())) {
+                    unificationList.push_back(replaces[j]->to);
+//                    replaces.erase(j);
+                }
+            }
+
+            if (unificationList.size() < 2) continue;
+
+            // Пробуем унифицировать
+
+
+            // Проверка одинаковости типов
+            for (int j = 0; j < unificationList.size() - 1; j++) {
+                if (typeid(*unificationList[j]) != typeid(*unificationList[j+1])) {
+                    isNotRecon = true;
+                    break;
+                }
+
+                if ( (typeid(*unificationList[j]) == typeid(Constant)) &&
+                     (unificationList[j]->getID() != unificationList[j+1]->getID()) ) {
+                    isNotRecon = true;
+                    break;
+                }
+            }
+
+            if (isNotRecon) break;
+
+
+            // Унификация
+            if (typeid(*unificationList[0]) == typeid(FuncConstant)) {
+                Lambda* lam = unification((FuncConstant*) unificationList[0], (FuncConstant*) unificationList[1]);
+                if (lam != NULL) {
+                    l->extend(lam);
+                }
+                else {
+                    isNotRecon = true;
+                    break;
+                }
+            }
+        }
+
+        if (!isNotRecon) {
+            v->push_back(l);
+        }
+    }
+
+    return v;
 }

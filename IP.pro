@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     wtype.cpp \
     divisor.cpp \
     treeitem.cpp \
-    treemodel.cpp
+    treemodel.cpp \
+    statementlambda.cpp
 
 RESOURCES += qml.qrc
 
@@ -70,4 +71,5 @@ HEADERS += \
     wtype.h \
     divisor.h \
     treeitem.h \
-    treemodel.h
+    treemodel.h \
+    statementlambda.h

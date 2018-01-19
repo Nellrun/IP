@@ -18,7 +18,8 @@ public:
     std::vector<Symbol*>* getSymbols();
     void setSymbols(std::vector<Symbol*>* s);
     FuncConstant* addSymbol(Symbol* s);
-    void setLevel(int lvl);
+    void setLevel(int lvl, int ind);
+    bool isEqual(FuncConstant* b);
 
     int getSize();
 

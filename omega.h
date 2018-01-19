@@ -44,7 +44,7 @@ public:
         \property Omega::r
         \brief Подстановки
      */
-    Lambda* r;
+    std::vector<Lambda*> r;
 };
 
 #endif // OMEGA_H

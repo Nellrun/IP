@@ -17,6 +17,19 @@ int Statement::getSize() {
     return literals.size();
 }
 
+bool Statement::isEqual(Statement *b)
+{
+    if (literals.size() != b->getSize()) return false;
+
+    for (int i = 0; i < literals.size(); i++) {
+        Predicate* p = (*b->getLiterals())[i];
+        if (p->isNegative() != literals[i]->isNegative()) return false;
+        if (!literals[i]->isEqual(p)) return false;
+    }
+
+    return true;
+}
+
 Statement* Statement::replace(Lambda *l, int id = -1) {
     Statement* s = new Statement();
 
@@ -54,10 +67,10 @@ Statement* Statement::copy(bool inverse) {
     return s;
 }
 
-void Statement::setLevel(int lvl)
+void Statement::setLevel(int lvl, int ind)
 {
     for (auto p: literals) {
-        p->setLevel(lvl);
+        p->setLevel(lvl, ind);
     }
 }
 
