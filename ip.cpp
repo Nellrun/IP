@@ -394,20 +394,21 @@ std::vector<Lambda*>* reconciliation(Step* root) {
     for (Lambda* l : notRecon) {
         bool isNotRecon = false;
 
+        std::vector<Replace*>* replaces = l->getList();
+
         for (int i = 0; i < l->getSize(); i++) {
 
             // Находим одинаковые переменные
-            std::vector<Replace*> replaces = l->getList();
-            Symbol* from = replaces[i]->from;
+            Symbol* from = (*replaces)[i]->from;
             std::vector<Symbol*> unificationList;
-            unificationList.push_back(replaces[i]->to);
+            unificationList.push_back((*replaces)[i]->to);
             for (int j = l->getSize() - 1; j > i; j--) {
-                Symbol* to = replaces[j]->from;
+                Symbol* to = (*replaces)[j]->from;
                 if ( (from->getID() == to->getID()) &&
                      (from->getLevel() == to->getLevel()) &&
                      (from->getIndex() == to->getIndex())) {
-                    unificationList.push_back(replaces[j]->to);
-//                    replaces.erase(j);
+                    unificationList.push_back((*replaces)[j]->to);
+                    (*replaces).erase((*replaces).begin() + j);
                 }
             }
 
@@ -447,6 +448,7 @@ std::vector<Lambda*>* reconciliation(Step* root) {
         }
 
         if (!isNotRecon) {
+//            l->setReplace(replaces);
             v->push_back(l);
         }
     }

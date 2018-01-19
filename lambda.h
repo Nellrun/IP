@@ -22,10 +22,11 @@ public:
     Lambda();
     ~Lambda();
 
-    std::vector<Replace*> getList();
+    std::vector<Replace*>* getList();
     void add(Symbol* from, Symbol* to);
     std::string toString();
     Symbol* getReplace(Symbol* s);
+    void setReplace(std::vector<Replace*> rp);
 
     void extend(Lambda* l);
     Lambda* copy();

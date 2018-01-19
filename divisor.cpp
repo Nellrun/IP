@@ -74,7 +74,7 @@ Divisor* Divisor::replace(Lambda* l, int k) {
         newElem->lambda = new Lambda();
         newElem->literal = elem->literal->copy();
 
-        for (auto elem : l->getList()) {
+        for (auto elem : (*l->getList())) {
                 newElem->literal->replace(elem->from, elem->to);
         }
 

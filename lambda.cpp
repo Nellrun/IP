@@ -8,9 +8,9 @@ Lambda::~Lambda()
 {
 }
 
-std::vector<Replace*> Lambda::getList()
+std::vector<Replace*>* Lambda::getList()
 {
-    return replaceList;
+    return &replaceList;
 }
 
 int Lambda::getSize() {
@@ -91,9 +91,13 @@ Symbol* Lambda::getReplace(Symbol *s)
     return NULL;
 }
 
+void Lambda::setReplace(std::vector<Replace*> rp) {
+    this->replaceList = rp;
+}
+
 void Lambda::extend(Lambda *l)
 {
-    for (Replace* elem : l->getList()) {
+    for (Replace* elem : (*l->getList())) {
         this->add(elem->from, elem->to);
     }
 }

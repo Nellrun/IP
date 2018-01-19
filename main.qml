@@ -9,8 +9,8 @@ import FileReader 1.0
 
 ApplicationWindow {
     visible: true
-    width: 640
-    height: 480
+    width: 800
+    height: 600
     title: qsTr("Исчисление предикатов")
 
     header: ToolBar {
